@@ -30,7 +30,7 @@ export default function About() {
               학회 소개
             </div>
             <h2 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-              아동과 학교에서의
+              아동.학교분야의
               <br />
               <span className="text-primary-600">작업치료 연구</span>
             </h2>

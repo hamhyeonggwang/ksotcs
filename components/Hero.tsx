@@ -37,7 +37,7 @@ export default function Hero() {
               대한아동학교작업치료학회
             </div>
             <h1 className="text-6xl md:text-8xl font-bold mb-6 leading-tight">
-              아동과 학교에서의
+              아동.학교분야의
               <br />
               <span className="text-primary-400">작업치료</span>
               <br />
