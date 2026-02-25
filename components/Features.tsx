@@ -35,8 +35,8 @@ const features = [
 
 export default function Features() {
   const images = [
-    // 책과 필기도구
-    'https://images.unsplash.com/photo-1519744792095-2f2205e87b6f?q=80&w=800',
+    // 학술지와 논문 - 학회지 안내용
+    'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800',
     // 알록달록한 문구류
     'https://images.unsplash.com/photo-1522202195461-41a8a0c2eea0?q=80&w=800',
     // 교육용 카드와 교구
