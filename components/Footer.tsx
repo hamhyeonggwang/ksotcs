@@ -68,6 +68,14 @@ export default function Footer() {
               </li>
               <li>
                 <Link
+                  href="/education-schedule"
+                  className="hover:text-primary-400 transition-colors"
+                >
+                  연간교육일정
+                </Link>
+              </li>
+              <li>
+                <Link
                   href="http://ksotcs.co.kr"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -97,6 +105,14 @@ export default function Footer() {
               <li>12층 4호(용계동)</li>
               <li>대표번호: 010.7631.1778</li>
               <li>사업자등록번호: 715-73-00391</li>
+              <li>
+                <Link
+                  href="mailto:ksot4cs@gmail.com"
+                  className="hover:text-primary-400 transition-colors"
+                >
+                  이메일: ksot4cs@gmail.com
+                </Link>
+              </li>
             </ul>
           </div>
         </div>

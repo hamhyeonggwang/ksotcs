@@ -9,6 +9,8 @@ const menuItems = [
   { name: '학회소식', href: '/news' },
   { name: '교육센터', href: 'http://ksotcs.co.kr' },
   { name: '민간자격과정 안내', href: '/certification' },
+  { name: '연간교육일정', href: '/education-schedule' },
+  { name: '문의', href: 'mailto:ksot4cs@gmail.com' },
 ]
 
 export default function Navbar() {
@@ -46,7 +48,7 @@ export default function Navbar() {
               <Link
                 key={item.name}
                 href={item.href}
-                target={item.href.startsWith('http') ? '_blank' : undefined}
+                target={item.href.startsWith('http') || item.href.startsWith('mailto:') ? '_blank' : undefined}
                 rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                 className="text-gray-700 hover:text-primary-600 font-medium transition-colors duration-200 relative group"
               >
@@ -87,7 +89,7 @@ export default function Navbar() {
               <Link
                 key={item.name}
                 href={item.href}
-                target={item.href.startsWith('http') ? '_blank' : undefined}
+                target={item.href.startsWith('http') || item.href.startsWith('mailto:') ? '_blank' : undefined}
                 rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                 className="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600 rounded-md transition-colors"
                 onClick={() => setIsMobileMenuOpen(false)}

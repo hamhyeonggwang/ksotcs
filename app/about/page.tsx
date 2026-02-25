@@ -67,27 +67,252 @@ export default function AboutPage() {
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 pb-4 border-b-2 border-primary-200">
             연혁
           </h2>
-          <div className="space-y-6">
-            <div className="flex items-start gap-4 p-6 bg-gradient-to-r from-primary-50 to-white rounded-xl border-l-4 border-primary-600">
-              <div className="text-2xl font-bold text-primary-600 min-w-[80px]">2011년</div>
-              <div className="text-lg text-gray-700">제1대 이재신 회장 취임</div>
+          <div className="space-y-8">
+            {/* 2010년 */}
+            <div className="border-l-4 border-primary-600 pl-6">
+              <div className="text-3xl font-bold text-primary-600 mb-4">2010년</div>
+              <div className="space-y-2 text-gray-700">
+                <div className="flex items-start gap-2">
+                  <span className="font-semibold text-primary-700 min-w-[60px]">12월</span>
+                  <span>「아동∙학교 작업치료학회지」1권 발간</span>
+                </div>
+              </div>
             </div>
-            <div className="flex items-start gap-4 p-6 bg-gradient-to-r from-primary-50 to-white rounded-xl border-l-4 border-primary-600">
-              <div className="text-2xl font-bold text-primary-600 min-w-[80px]">2015년</div>
-              <div className="text-lg text-gray-700">제2대 이지연 회장 취임</div>
+
+            {/* 2011년 */}
+            <div className="border-l-4 border-primary-600 pl-6">
+              <div className="text-3xl font-bold text-primary-600 mb-4">2011년</div>
+              <div className="space-y-2 text-gray-700">
+                <div className="flex items-start gap-2">
+                  <span className="font-semibold text-primary-700 min-w-[60px]">4월</span>
+                  <span>제1대 이재신 회장 취임</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="font-semibold text-primary-700 min-w-[60px]">4월</span>
+                  <span>아동∙학교 작업치료학회 창립세미나 및 교육</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="font-semibold text-primary-700 min-w-[60px]">4월</span>
+                  <span>아동∙학교 작업치료학회 회칙 및 운영세칙 개정</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="font-semibold text-primary-700 min-w-[60px]">6월</span>
+                  <span>「아동∙학교 작업치료학회지」2권 발간</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="font-semibold text-primary-700 min-w-[60px]">7월</span>
+                  <span>인지․지각 신경학적 기초 및 인지 발달 교육</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="font-semibold text-primary-700 min-w-[60px]">9월</span>
+                  <span>아동∙학교 작업치료학회 베일리 Ⅲ 워크숍</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="font-semibold text-primary-700 min-w-[60px]">11월</span>
+                  <span>추계학술대회 (주제: 아동인지평가도구 DOTCA-Ch의 이론과 실제)</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="font-semibold text-primary-700 min-w-[60px]">12월</span>
+                  <span>「아동∙학교 작업치료학회지」2권 2호 발간</span>
+                </div>
+              </div>
             </div>
-            <div className="flex items-start gap-4 p-6 bg-gradient-to-r from-primary-50 to-white rounded-xl border-l-4 border-primary-600">
-              <div className="text-2xl font-bold text-primary-600 min-w-[80px]"></div>
-              <div className="text-lg text-gray-700">제3대 최유임 회장 취임</div>
+
+            {/* 2012년 */}
+            <div className="border-l-4 border-primary-600 pl-6">
+              <div className="text-3xl font-bold text-primary-600 mb-4">2012년</div>
+              <div className="space-y-2 text-gray-700">
+                <div className="flex items-start gap-2">
+                  <span className="font-semibold text-primary-700 min-w-[60px]">3월</span>
+                  <span>시지각 이론과 평가 및 중재 교육</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="font-semibold text-primary-700 min-w-[60px]">5월</span>
+                  <span>글쓰기 이론과 평가 및 중재 교육</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="font-semibold text-primary-700 min-w-[60px]">6월</span>
+                  <span>SFA 평가 및 치료적 적용 교육</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="font-semibold text-primary-700 min-w-[60px]">8월</span>
+                  <span>인지발달치료사 자격시험 실시</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="font-semibold text-primary-700 min-w-[60px]">8월</span>
+                  <span>아동∙학교 작업치료학회 하계 특강</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="font-semibold text-primary-700 min-w-[60px]">9월</span>
+                  <span>인지 심리학의 기초 및 인지 발달 교육</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="font-semibold text-primary-700 min-w-[60px]">9월</span>
+                  <span>아동작업치료(계축문화사) 출간</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="font-semibold text-primary-700 min-w-[60px]">11월</span>
+                  <span>추계학술대회 (주제: 발달장애 아동 작업치료에서 응용행동분석의 적용)</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="font-semibold text-primary-700 min-w-[60px]">12월</span>
+                  <span>「아동∙학교 작업치료학회지」3권 발간</span>
+                </div>
+              </div>
             </div>
-            <div className="flex items-start gap-4 p-6 bg-gradient-to-r from-primary-50 to-white rounded-xl border-l-4 border-primary-600">
-              <div className="text-2xl font-bold text-primary-600 min-w-[80px]">2024년</div>
-              <div className="text-lg text-gray-700">제4대 유은영 회장 취임</div>
+
+            {/* 2013년 */}
+            <div className="border-l-4 border-primary-600 pl-6">
+              <div className="text-3xl font-bold text-primary-600 mb-4">2013년</div>
+              <div className="space-y-2 text-gray-700">
+                <div className="flex items-start gap-2">
+                  <span className="font-semibold text-primary-700 min-w-[60px]">3월</span>
+                  <span>OTIPM을 적용한 아동작업치료의 실제 교육</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="font-semibold text-primary-700 min-w-[60px]">5월</span>
+                  <span>3주년 기념 특강 "행동치료를 통합 ADL 훈련의 실제"</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="font-semibold text-primary-700 min-w-[60px]">7월</span>
+                  <span>인지 심리학 및 발달 교육</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="font-semibold text-primary-700 min-w-[60px]">7월</span>
+                  <span>- 인지 지각신경과학과 인지 평가 및 중재 교육</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="font-semibold text-primary-700 min-w-[60px]">7월</span>
+                  <span>- 글쓰기 평가 및 중재 교육</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="font-semibold text-primary-700 min-w-[60px]">7월</span>
+                  <span>- 발달 평가 교육</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="font-semibold text-primary-700 min-w-[60px]">7월</span>
+                  <span>- 시지각 평가 및 중재 교육</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="font-semibold text-primary-700 min-w-[60px]">7월</span>
+                  <span>- 학교작업치료 교육</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="font-semibold text-primary-700 min-w-[60px]">9월</span>
+                  <span>인지학습치료</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="font-semibold text-primary-700 min-w-[60px]">11월</span>
+                  <span>추계학술대회 (주제: 정서발달의 심리학)</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="font-semibold text-primary-700 min-w-[60px]">12월</span>
+                  <span>인지발달치료사 자격시험</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="font-semibold text-primary-700 min-w-[60px]">12월</span>
+                  <span>「아동∙학교 작업치료학회지」4권 발간</span>
+                </div>
+              </div>
             </div>
-            <div className="flex items-start gap-4 p-6 bg-gradient-to-r from-primary-50 to-white rounded-xl border-l-4 border-primary-600">
-              <div className="text-2xl font-bold text-primary-600 min-w-[80px]">2026년</div>
-              <div className="text-lg text-gray-700">
-                제5대 김진경 회장 취임과 이사회 구성 중심으로
+
+            {/* 2014년 */}
+            <div className="border-l-4 border-primary-600 pl-6">
+              <div className="text-3xl font-bold text-primary-600 mb-4">2014년</div>
+              <div className="space-y-2 text-gray-700">
+                <div className="flex items-start gap-2">
+                  <span className="font-semibold text-primary-700 min-w-[60px]">3월</span>
+                  <span>아동작업치료 개정판 출간</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="font-semibold text-primary-700 min-w-[60px]">4월</span>
+                  <span>뇌성마비 아동의 인지치료와 인지학습 치료</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="font-semibold text-primary-700 min-w-[60px]">7월</span>
+                  <span>인지발달치료사 교육</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="font-semibold text-primary-700 min-w-[60px]">7월</span>
+                  <span>- 인지지각 신경과학</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="font-semibold text-primary-700 min-w-[60px]">7월</span>
+                  <span>- 아동기 인지발달 이론</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="font-semibold text-primary-700 min-w-[60px]">7월</span>
+                  <span>- 인지심리학의 기초</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="font-semibold text-primary-700 min-w-[60px]">7월</span>
+                  <span>- 글쓰기 평가 및 중재</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="font-semibold text-primary-700 min-w-[60px]">7월</span>
+                  <span>- 인지 평가 및 중재</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="font-semibold text-primary-700 min-w-[60px]">7월</span>
+                  <span>- 시지각 평가 및 중재</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="font-semibold text-primary-700 min-w-[60px]">7월</span>
+                  <span>- 학교 작업치료</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="font-semibold text-primary-700 min-w-[60px]">7월</span>
+                  <span>- 발달 평가</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="font-semibold text-primary-700 min-w-[60px]">11월</span>
+                  <span>추계학술대회 (주제: 아동의 인지학습을 위한 보조공학적 접근)</span>
+                </div>
+              </div>
+            </div>
+
+            {/* 2015년 */}
+            <div className="border-l-4 border-primary-600 pl-6">
+              <div className="text-3xl font-bold text-primary-600 mb-4">2015년</div>
+              <div className="space-y-2 text-gray-700">
+                <div className="flex items-start gap-2">
+                  <span className="font-semibold text-primary-700 min-w-[60px]">1월</span>
+                  <span>제2대 이지연 회장 취임</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="font-semibold text-primary-700 min-w-[60px]">3월</span>
+                  <span>CO-OP(Cognitive Orientation to daily Occupational Performance) 소개 및 사례 발표</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="font-semibold text-primary-700 min-w-[60px]">5월</span>
+                  <span>Interactive metronome(IM) 전문가 교육 세미나</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="font-semibold text-primary-700 min-w-[60px]">11월</span>
+                  <span>추계학술대회 (주제: 작업치료사를 위한 연구 윤리)</span>
+                </div>
+              </div>
+            </div>
+
+            {/* 2024년 */}
+            <div className="border-l-4 border-primary-600 pl-6">
+              <div className="text-3xl font-bold text-primary-600 mb-4">2024년</div>
+              <div className="space-y-2 text-gray-700">
+                <div className="flex items-start gap-2">
+                  <span className="font-semibold text-primary-700 min-w-[60px]"></span>
+                  <span>제4대 유은영 회장 취임</span>
+                </div>
+              </div>
+            </div>
+
+            {/* 2026년 */}
+            <div className="border-l-4 border-primary-600 pl-6">
+              <div className="text-3xl font-bold text-primary-600 mb-4">2026년</div>
+              <div className="space-y-2 text-gray-700">
+                <div className="flex items-start gap-2">
+                  <span className="font-semibold text-primary-700 min-w-[60px]"></span>
+                  <span>제5대 김진경 회장 취임과 이사회 구성 중심으로</span>
+                </div>
               </div>
             </div>
           </div>
