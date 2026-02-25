@@ -17,7 +17,8 @@ export default function Hero() {
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30"
           style={{
-            backgroundImage: `url('https://images.unsplash.com/photo-1607746882042-944635dfe10e?q=80&w=2000')`, // 밝은 병원/클리닉 느낌
+            // 교재·교구 중심의 따뜻한 책상 이미지
+            backgroundImage: `url('https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?q=80&w=2000')`,
           }}
         ></div>
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/80"></div>

@@ -60,6 +60,14 @@ export default function Footer() {
               </li>
               <li>
                 <Link
+                  href="/certification"
+                  className="hover:text-primary-400 transition-colors"
+                >
+                  민간자격과정 안내
+                </Link>
+              </li>
+              <li>
+                <Link
                   href="http://ksotcs.co.kr"
                   target="_blank"
                   rel="noopener noreferrer"

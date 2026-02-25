@@ -35,9 +35,12 @@ const features = [
 
 export default function Features() {
   const images = [
-    'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?q=80&w=800',
-    'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=800',
-    'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=800',
+    // 책과 필기도구
+    'https://images.unsplash.com/photo-1519744792095-2f2205e87b6f?q=80&w=800',
+    // 알록달록한 문구류
+    'https://images.unsplash.com/photo-1522202195461-41a8a0c2eea0?q=80&w=800',
+    // 교육용 카드와 교구
+    'https://images.unsplash.com/photo-1610465299996-30f240ac2b59?q=80&w=800',
   ]
 
   return (
@@ -73,11 +76,7 @@ export default function Features() {
                 <div 
                   className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
                   style={{
-                    backgroundImage: `url('${[
-                      'https://images.unsplash.com/photo-1588072432836-e10032774350?q=80&w=800',
-                      'https://images.unsplash.com/photo-1588072432836-e10032774350?q=80&w=800',
-                      'https://images.unsplash.com/photo-1588072432836-e10032774350?q=80&w=800',
-                    ][index]}')`,
+                    backgroundImage: `url('${images[index]}')`,
                   }}
                 ></div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>

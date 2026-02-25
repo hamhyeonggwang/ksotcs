@@ -20,9 +20,12 @@ const newsItems = [
 
 export default function News() {
   const newsImages = [
-    'https://images.unsplash.com/photo-1588072432836-e10032774350?q=80&w=800',
-    'https://images.unsplash.com/photo-1588072432836-e10032774350?q=80&w=800',
-    'https://images.unsplash.com/photo-1588072432836-e10032774350?q=80&w=800',
+    // 공지사항 느낌의 노트와 펜
+    'https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=800',
+    // 회의·기록용 교재
+    'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?q=80&w=800',
+    // 교육용 자료와 문서
+    'https://images.unsplash.com/photo-1457612928689-a1ab27da0dad?q=80&w=800',
   ]
 
   return (
