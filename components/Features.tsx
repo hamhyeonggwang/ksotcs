@@ -24,7 +24,7 @@ const features = [
   {
     title: '교육센터',
     description: '전문 교육 센터에서 체계적인 교육을 받으세요',
-    href: '/center',
+    href: 'http://ksotcs.co.kr',
     icon: (
       <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
@@ -34,40 +34,76 @@ const features = [
 ]
 
 export default function Features() {
+  const images = [
+    'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?q=80&w=800',
+    'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=800',
+    'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=800',
+  ]
+
   return (
-    <section className="py-24 bg-gradient-to-b from-white to-primary-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+    <section className="py-32 bg-gradient-to-b from-white via-gray-50 to-white relative overflow-hidden">
+      {/* Background Decoration */}
+      <div className="absolute top-1/4 right-0 w-96 h-96 bg-primary-100/20 rounded-full blur-3xl"></div>
+      <div className="absolute bottom-1/4 left-0 w-96 h-96 bg-blue-100/20 rounded-full blur-3xl"></div>
+
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-20">
+          <div className="inline-block px-4 py-2 bg-primary-100 text-primary-700 rounded-full text-sm font-semibold mb-6">
             주요 서비스
+          </div>
+          <h2 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
+            학회의 다양한 서비스
           </h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-primary-600 to-primary-800 mx-auto mb-6"></div>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            학회의 다양한 서비스와 정보를 확인하세요
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            연구, 소식, 교육 등 학회의 다양한 정보를 확인하세요
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {features.map((feature, index) => (
             <Link
               key={index}
               href={feature.href}
-              className="group p-8 bg-white rounded-2xl border border-gray-200 hover:border-primary-300 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
+              target={feature.href.startsWith('http') ? '_blank' : undefined}
+              rel={feature.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+              className="group relative overflow-hidden bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3"
             >
-              <div className="w-16 h-16 bg-gradient-to-br from-primary-500 to-primary-700 rounded-xl flex items-center justify-center text-white mb-6 group-hover:scale-110 transition-transform duration-300">
-                {feature.icon}
+              {/* Image Background */}
+              <div className="relative h-64 overflow-hidden">
+                <div 
+                  className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                  style={{
+                    backgroundImage: `url('${images[index]}')`,
+                  }}
+                ></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+                
+                {/* Icon Overlay */}
+                <div className="absolute top-6 right-6 w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center border border-white/30 group-hover:scale-110 transition-transform duration-300">
+                  <div className="text-white">
+                    {feature.icon}
+                  </div>
+                </div>
+
+                {/* Title Overlay */}
+                <div className="absolute bottom-0 left-0 right-0 p-6">
+                  <h3 className="text-2xl font-bold text-white mb-2">
+                    {feature.title}
+                  </h3>
+                </div>
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-primary-600 transition-colors">
-                {feature.title}
-              </h3>
-              <p className="text-gray-600 leading-relaxed">
-                {feature.description}
-              </p>
-              <div className="mt-4 flex items-center text-primary-600 font-semibold group-hover:translate-x-2 transition-transform duration-300">
-                자세히 보기
-                <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
+
+              {/* Content */}
+              <div className="p-6">
+                <p className="text-gray-600 leading-relaxed mb-4">
+                  {feature.description}
+                </p>
+                <div className="flex items-center text-primary-600 font-semibold group-hover:translate-x-2 transition-transform duration-300">
+                  자세히 보기
+                  <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </div>
               </div>
             </Link>
           ))}

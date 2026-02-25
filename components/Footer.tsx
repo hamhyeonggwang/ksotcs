@@ -49,17 +49,32 @@ export default function Footer() {
             <h3 className="text-white font-bold text-lg mb-4">교육</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/center" className="hover:text-primary-400 transition-colors">
+                <Link
+                  href="http://ksotcs.co.kr"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-primary-400 transition-colors"
+                >
                   교육센터
                 </Link>
               </li>
               <li>
-                <Link href="/center" className="hover:text-primary-400 transition-colors">
+                <Link
+                  href="http://ksotcs.co.kr"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-primary-400 transition-colors"
+                >
                   교육 프로그램
                 </Link>
               </li>
               <li>
-                <Link href="/center" className="hover:text-primary-400 transition-colors">
+                <Link
+                  href="http://ksotcs.co.kr"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-primary-400 transition-colors"
+                >
                   세미나
                 </Link>
               </li>

@@ -7,7 +7,7 @@ const menuItems = [
   { name: '학회소개', href: '/about' },
   { name: '학회지 안내', href: '/journal' },
   { name: '학회소식', href: '/news' },
-  { name: '교육센터', href: '/center' },
+  { name: '교육센터', href: 'http://ksotcs.co.kr' },
 ]
 
 export default function Navbar() {
@@ -45,6 +45,8 @@ export default function Navbar() {
               <Link
                 key={item.name}
                 href={item.href}
+                target={item.href.startsWith('http') ? '_blank' : undefined}
+                rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                 className="text-gray-700 hover:text-primary-600 font-medium transition-colors duration-200 relative group"
               >
                 {item.name}
@@ -84,6 +86,8 @@ export default function Navbar() {
               <Link
                 key={item.name}
                 href={item.href}
+                target={item.href.startsWith('http') ? '_blank' : undefined}
+                rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                 className="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600 rounded-md transition-colors"
                 onClick={() => setIsMobileMenuOpen(false)}
               >

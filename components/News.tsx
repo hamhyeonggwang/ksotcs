@@ -19,48 +19,84 @@ const newsItems = [
 ]
 
 export default function News() {
+  const newsImages = [
+    'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=800',
+    'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=800',
+    'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=800',
+  ]
+
   return (
-    <section className="py-24 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center mb-12">
+    <section className="py-32 bg-white relative overflow-hidden">
+      {/* Background Decoration */}
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary-50 rounded-full blur-3xl opacity-50"></div>
+
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-start mb-16">
           <div>
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+            <div className="inline-block px-4 py-2 bg-primary-100 text-primary-700 rounded-full text-sm font-semibold mb-6">
               최신 소식
+            </div>
+            <h2 className="text-5xl md:text-6xl font-bold text-gray-900 mb-4">
+              학회 소식
             </h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-primary-600 to-primary-800 mb-6"></div>
+            <p className="text-xl text-gray-600 max-w-2xl">
+              최신 공지사항과 학회 소식을 확인하세요
+            </p>
           </div>
           <Link
             href="/news"
-            className="hidden md:flex items-center text-primary-600 font-semibold hover:text-primary-700 transition-colors"
+            className="hidden md:flex items-center gap-2 px-6 py-3 bg-primary-600 text-white rounded-lg font-semibold hover:bg-primary-700 transition-colors shadow-lg"
           >
             전체 보기
-            <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
           </Link>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-3 gap-8">
           {newsItems.map((item, index) => (
             <Link
               key={index}
               href="/news"
-              className="group p-6 bg-gradient-to-br from-gray-50 to-white rounded-xl border border-gray-200 hover:border-primary-300 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+              className="group relative overflow-hidden bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2"
             >
-              <div className="flex items-center justify-between mb-3">
-                <span className="px-3 py-1 bg-primary-100 text-primary-700 text-sm font-semibold rounded-full">
-                  {item.category}
-                </span>
-                <span className="text-sm text-gray-500">{item.date}</span>
+              {/* Image */}
+              <div className="relative h-48 overflow-hidden">
+                <div 
+                  className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                  style={{
+                    backgroundImage: `url('${newsImages[index]}')`,
+                  }}
+                ></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                
+                {/* Category Badge */}
+                <div className="absolute top-4 left-4">
+                  <span className="px-4 py-2 bg-white/90 backdrop-blur-sm text-primary-700 text-sm font-semibold rounded-full">
+                    {item.category}
+                  </span>
+                </div>
+
+                {/* Date */}
+                <div className="absolute bottom-4 right-4">
+                  <span className="px-3 py-1 bg-black/50 backdrop-blur-sm text-white text-sm rounded-full">
+                    {item.date}
+                  </span>
+                </div>
               </div>
-              <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-primary-600 transition-colors line-clamp-2">
-                {item.title}
-              </h3>
-              <div className="flex items-center text-primary-600 text-sm font-medium mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                자세히 보기
-                <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
+
+              {/* Content */}
+              <div className="p-6">
+                <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-primary-600 transition-colors line-clamp-2 min-h-[3.5rem]">
+                  {item.title}
+                </h3>
+                <div className="flex items-center text-primary-600 font-semibold mt-4">
+                  자세히 보기
+                  <svg className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </div>
               </div>
             </Link>
           ))}
