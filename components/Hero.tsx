@@ -44,10 +44,10 @@ export default function Hero() {
             학회 소개
           </Link>
           <Link
-            href="/education"
+            href="/center"
             className="px-8 py-4 bg-white text-primary-600 rounded-lg font-semibold text-lg border-2 border-primary-600 hover:bg-primary-50 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
           >
-            교육 정보
+            교육센터
           </Link>
         </div>
       </div>

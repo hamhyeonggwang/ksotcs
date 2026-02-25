@@ -41,11 +41,6 @@ export default function Footer() {
                   학회소식
                 </Link>
               </li>
-              <li>
-                <Link href="/education" className="hover:text-primary-400 transition-colors">
-                  교육정보
-                </Link>
-              </li>
             </ul>
           </div>
 
@@ -54,17 +49,17 @@ export default function Footer() {
             <h3 className="text-white font-bold text-lg mb-4">교육</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/education" className="hover:text-primary-400 transition-colors">
-                  교육 프로그램
-                </Link>
-              </li>
-              <li>
                 <Link href="/center" className="hover:text-primary-400 transition-colors">
                   교육센터
                 </Link>
               </li>
               <li>
-                <Link href="/education" className="hover:text-primary-400 transition-colors">
+                <Link href="/center" className="hover:text-primary-400 transition-colors">
+                  교육 프로그램
+                </Link>
+              </li>
+              <li>
+                <Link href="/center" className="hover:text-primary-400 transition-colors">
                   세미나
                 </Link>
               </li>

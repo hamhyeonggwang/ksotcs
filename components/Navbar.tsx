@@ -7,7 +7,6 @@ const menuItems = [
   { name: '학회소개', href: '/about' },
   { name: '학회지 안내', href: '/journal' },
   { name: '학회소식', href: '/news' },
-  { name: '교육정보', href: '/education' },
   { name: '교육센터', href: '/center' },
 ]
 
