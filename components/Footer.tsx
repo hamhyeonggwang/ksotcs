@@ -24,6 +24,11 @@ export default function Footer() {
                   연혁
                 </Link>
               </li>
+              <li>
+                <Link href="/statutes" className="hover:text-primary-400 transition-colors">
+                  학회 정관
+                </Link>
+              </li>
             </ul>
           </div>
 

@@ -250,7 +250,6 @@ export default function EducationSchedulePage() {
                             <th className="text-left py-3 px-4 font-semibold text-gray-700">자격교육과정명</th>
                             <th className="text-left py-3 px-4 font-semibold text-gray-700">교육명</th>
                             <th className="text-left py-3 px-4 font-semibold text-gray-700">교육시간</th>
-                            <th className="text-left py-3 px-4 font-semibold text-gray-700">강사</th>
                             <th className="text-left py-3 px-4 font-semibold text-gray-700">교육방법</th>
                             <th className="text-left py-3 px-4 font-semibold text-gray-700">교육대상자</th>
                           </tr>
@@ -265,7 +264,6 @@ export default function EducationSchedulePage() {
                               <td className="py-4 px-4 text-gray-700">{schedule.courseName}</td>
                               <td className="py-4 px-4 text-gray-700 font-medium">{schedule.educationName}</td>
                               <td className="py-4 px-4 text-gray-700">{schedule.educationTime}</td>
-                              <td className="py-4 px-4 text-gray-700">{schedule.instructor || '-'}</td>
                               <td className="py-4 px-4 text-gray-700">
                                 <span className="px-3 py-1 bg-primary-100 text-primary-700 rounded-full text-sm font-medium">
                                   {schedule.method}
