@@ -107,6 +107,14 @@ export default function Footer() {
               <li>사업자등록번호: 715-73-00391</li>
               <li>
                 <Link
+                  href="/inquiry"
+                  className="hover:text-primary-400 transition-colors"
+                >
+                  문의하기
+                </Link>
+              </li>
+              <li>
+                <Link
                   href="mailto:ksot4cs@gmail.com"
                   className="hover:text-primary-400 transition-colors"
                 >

@@ -10,7 +10,7 @@ const menuItems = [
   { name: '교육센터', href: 'http://ksotcs.co.kr' },
   { name: '민간자격과정 안내', href: '/certification' },
   { name: '연간교육일정', href: '/education-schedule' },
-  { name: '문의', href: 'mailto:ksot4cs@gmail.com' },
+  { name: '문의', href: '/inquiry' },
 ]
 
 export default function Navbar() {
