@@ -73,7 +73,11 @@ export default function Features() {
                 <div 
                   className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
                   style={{
-                    backgroundImage: `url('${images[index]}')`,
+                    backgroundImage: `url('${[
+                      'https://images.unsplash.com/photo-1588072432836-e10032774350?q=80&w=800',
+                      'https://images.unsplash.com/photo-1588072432836-e10032774350?q=80&w=800',
+                      'https://images.unsplash.com/photo-1588072432836-e10032774350?q=80&w=800',
+                    ][index]}')`,
                   }}
                 ></div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>

@@ -8,7 +8,7 @@ export default function CTA() {
         <div 
           className="absolute inset-0 bg-cover bg-center opacity-40"
           style={{
-            backgroundImage: `url('https://images.unsplash.com/photo-1521737711867-e3b97375f902?q=80&w=2000')`,
+            backgroundImage: `url('https://images.unsplash.com/photo-1588072432836-e10032774350?q=80&w=2000')`, // 밝은 교실/아이들 느낌
           }}
         ></div>
         <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/60 to-black/90"></div>

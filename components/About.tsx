@@ -13,7 +13,7 @@ export default function About() {
               <div 
                 className="absolute inset-0 bg-cover bg-center"
                 style={{
-                  backgroundImage: `url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?q=80&w=2000')`,
+                  backgroundImage: `url('https://images.unsplash.com/photo-1607746882042-944635dfe10e?q=80&w=2000')`, // 동일한 밝은 톤 이미지
                 }}
               ></div>
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
@@ -30,7 +30,7 @@ export default function About() {
               학회 소개
             </div>
             <h2 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-              아동.학교분야의
+              아이들과 함께
               <br />
               <span className="text-primary-600">작업치료 연구</span>
             </h2>

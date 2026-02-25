@@ -20,9 +20,9 @@ const newsItems = [
 
 export default function News() {
   const newsImages = [
-    'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=800',
-    'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=800',
-    'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=800',
+    'https://images.unsplash.com/photo-1588072432836-e10032774350?q=80&w=800',
+    'https://images.unsplash.com/photo-1588072432836-e10032774350?q=80&w=800',
+    'https://images.unsplash.com/photo-1588072432836-e10032774350?q=80&w=800',
   ]
 
   return (

@@ -17,7 +17,7 @@ export default function Hero() {
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30"
           style={{
-            backgroundImage: `url('https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?q=80&w=2000')`,
+            backgroundImage: `url('https://images.unsplash.com/photo-1607746882042-944635dfe10e?q=80&w=2000')`, // 밝은 병원/클리닉 느낌
           }}
         ></div>
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/80"></div>
@@ -37,7 +37,7 @@ export default function Hero() {
               대한아동학교작업치료학회
             </div>
             <h1 className="text-6xl md:text-8xl font-bold mb-6 leading-tight">
-              아동.학교분야의
+              아이들과 함께
               <br />
               <span className="text-primary-400">작업치료</span>
               <br />
