@@ -14,31 +14,44 @@ export default function InquiryPage() {
 
         <div className="grid md:grid-cols-2 gap-8 mb-12">
           {/* 챗봇 상담 */}
-          <div className="bg-white rounded-3xl shadow-xl p-8 md:p-12">
+          <div className="bg-white rounded-3xl shadow-xl p-8 md:p-12 relative overflow-hidden">
+            {/* 준비중 오버레이 */}
+            <div className="absolute inset-0 bg-gray-50/80 backdrop-blur-sm z-10 flex items-center justify-center">
+              <div className="text-center">
+                <div className="inline-block px-4 py-2 bg-gray-200 text-gray-600 rounded-full text-sm font-semibold mb-3">
+                  준비중
+                </div>
+                <p className="text-gray-500 text-sm">곧 만나뵐게요</p>
+              </div>
+            </div>
+            
             <div className="flex items-center gap-4 mb-6">
-              <div className="w-16 h-16 bg-gradient-to-br from-primary-500 to-primary-700 rounded-2xl flex items-center justify-center">
+              <div className="w-16 h-16 bg-gradient-to-br from-gray-400 to-gray-500 rounded-2xl flex items-center justify-center">
                 <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                 </svg>
               </div>
-              <h2 className="text-3xl font-bold text-gray-900">챗봇 상담</h2>
+              <h2 className="text-3xl font-bold text-gray-400">챗봇 상담</h2>
             </div>
-            <p className="text-gray-600 leading-relaxed mb-6">
-              실시간으로 빠르게 답변받을 수 있는 챗봇 상담 서비스입니다.
-              간단한 문의사항은 챗봇을 통해 즉시 확인하실 수 있습니다.
+            <p className="text-gray-500 leading-relaxed mb-6">
+              실시간으로 빠르게 답변받을 수 있는 챗봇 상담 서비스를 준비하고 있습니다.
+              곧 만나뵐 수 있도록 노력하겠습니다.
             </p>
-            <div className="bg-primary-50 rounded-xl p-4 mb-6">
+            <div className="bg-gray-100 rounded-xl p-4 mb-6">
               <div className="flex items-start gap-3">
-                <svg className="w-5 h-5 text-primary-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                <svg className="w-5 h-5 text-gray-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
                 <div>
-                  <p className="text-sm font-semibold text-primary-700 mb-1">실시간 응답</p>
-                  <p className="text-sm text-gray-600">챗봇이 즉시 답변해드립니다</p>
+                  <p className="text-sm font-semibold text-gray-600 mb-1">준비중</p>
+                  <p className="text-sm text-gray-500">서비스 오픈 준비를 진행하고 있습니다</p>
                 </div>
               </div>
             </div>
-            <button className="w-full px-6 py-4 bg-primary-600 text-white rounded-lg font-semibold text-lg hover:bg-primary-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+            <button 
+              disabled
+              className="w-full px-6 py-4 bg-gray-300 text-gray-500 rounded-lg font-semibold text-lg cursor-not-allowed opacity-60"
+            >
               챗봇 상담 시작하기
             </button>
           </div>
@@ -93,7 +106,7 @@ export default function InquiryPage() {
               <svg className="w-5 h-5 text-primary-600 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              <p>챗봇 상담은 간단한 문의사항에 대해 실시간으로 답변해드립니다.</p>
+              <p>챗봇 상담 서비스는 현재 준비중입니다. 곧 만나뵐 수 있도록 노력하겠습니다.</p>
             </div>
             <div className="flex items-start gap-3">
               <svg className="w-5 h-5 text-primary-600 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">

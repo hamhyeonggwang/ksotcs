@@ -14,7 +14,7 @@ export default function About() {
                 className="absolute inset-0 bg-cover bg-center"
                 style={{
                   // 교구와 교재가 놓인 테이블 이미지
-                  backgroundImage: `url('https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?q=80&w=2000')`,
+                  backgroundImage: `url('/images/about-bg.jpg')`,
                 }}
               ></div>
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>

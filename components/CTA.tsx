@@ -9,7 +9,7 @@ export default function CTA() {
           className="absolute inset-0 bg-cover bg-center opacity-40"
           style={{
             // 사람보다 교구가 중심인 교육 환경 이미지
-            backgroundImage: `url('https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?q=80&w=2000')`,
+            backgroundImage: `url('/images/cta-bg.jpg')`,
           }}
         ></div>
         <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/60 to-black/90"></div>

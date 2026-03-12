@@ -21,11 +21,11 @@ const newsItems = [
 export default function News() {
   const newsImages = [
     // 공지사항 느낌의 노트와 펜
-    'https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=800',
+    '/images/news-1.jpg',
     // 회의·기록용 교재
-    'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?q=80&w=800',
+    '/images/news-2.jpg',
     // 교육용 자료와 문서
-    'https://images.unsplash.com/photo-1457612928689-a1ab27da0dad?q=80&w=800',
+    '/images/news-3.jpg',
   ]
 
   return (
