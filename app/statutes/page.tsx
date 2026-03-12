@@ -400,7 +400,7 @@ export default function StatutesPage() {
               
               <div className="space-y-6">
                 <div>
-                  <h3 className="text-xl font-bold text-gray-800 mb-3">제 29조(학회해산)</h3>
+                  <h3 className="text-xl font-bold text-gray-800 mb-3">제 29장(학회해산)</h3>
                   <p className="text-gray-700 leading-relaxed">
                     본회를 해산하고자 할때에는 총회에서 회원 3/4이상의 찬성으로 의결하여 해산한다.
                   </p>
