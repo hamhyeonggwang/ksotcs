@@ -40,13 +40,15 @@ export default function CTA() {
               rel="noopener noreferrer"
               className="px-8 py-4 bg-white text-black rounded-lg font-semibold text-lg hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 inline-flex items-center justify-center"
             >
-              교육 프로그램 신청
+              교육 센터
               <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
               </svg>
             </Link>
             <Link
-              href="/about"
+              href="https://ksotcs.co.kr/%ed%9a%8c%ec%9b%90%ea%b0%80%ec%9e%85/"
+              target="_blank"
+              rel="noopener noreferrer"
               className="px-8 py-4 bg-transparent text-white rounded-lg font-semibold text-lg border-2 border-white hover:bg-white/10 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 inline-flex items-center justify-center"
             >
               학회 가입하기
