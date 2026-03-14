@@ -4,11 +4,54 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 
 export default function Hero() {
-  const [isVisible, setIsVisible] = useState(false)
+  const [showWorkTherapy, setShowWorkTherapy] = useState(false)
+  const [showOtherText, setShowOtherText] = useState(false)
+  const [typedText, setTypedText] = useState('')
+  const [showCursor, setShowCursor] = useState(true)
+
+  const fullText = '아동.학교분야의 연구와 실천을 통해 더 나은 미래를 만들어갑니다.'
 
   useEffect(() => {
-    setIsVisible(true)
-  }, [])
+    // "작업치료" 먼저 페이드인
+    const timer1 = setTimeout(() => {
+      setShowWorkTherapy(true)
+    }, 300)
+
+    // 그 다음 "아이들과 함께"와 "미래를 만들어갑니다" 동시에 페이드인
+    const timer2 = setTimeout(() => {
+      setShowOtherText(true)
+    }, 1000)
+
+    // 타이핑 효과 시작 (제목이 나타난 후)
+    let typingInterval: NodeJS.Timeout | null = null
+    const timer3 = setTimeout(() => {
+      let currentIndex = 0
+      typingInterval = setInterval(() => {
+        if (currentIndex < fullText.length) {
+          setTypedText(fullText.slice(0, currentIndex + 1))
+          currentIndex++
+        } else {
+          if (typingInterval) {
+            clearInterval(typingInterval)
+            typingInterval = null
+          }
+          // 타이핑 완료 후 커서 깜빡임 제거
+          setTimeout(() => {
+            setShowCursor(false)
+          }, 500)
+        }
+      }, 50) // 각 글자마다 50ms 간격
+    }, 2500) // 제목 애니메이션 완료 후 시작
+
+    return () => {
+      clearTimeout(timer1)
+      clearTimeout(timer2)
+      clearTimeout(timer3)
+      if (typingInterval) {
+        clearInterval(typingInterval)
+      }
+    }
+  }, [fullText])
 
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden bg-black">
@@ -28,9 +71,7 @@ export default function Hero() {
       <div className="absolute top-0 right-0 w-96 h-96 bg-primary-600/10 rounded-full blur-3xl"></div>
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl"></div>
 
-      <div className={`relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full transition-all duration-1000 ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-      }`}>
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left: Text Content */}
           <div className="text-white">
@@ -38,14 +79,27 @@ export default function Hero() {
               대한아동학교작업치료학회
             </div>
             <h1 className="text-6xl md:text-8xl font-bold mb-6 leading-tight">
-              아이들과 함께
+              <span className={`transition-opacity duration-1000 ${
+                showOtherText ? 'opacity-100' : 'opacity-0'
+              }`}>
+                아이들을 위한
+              </span>
               <br />
-              <span className="text-primary-400">작업치료</span>
+              <span className={`text-primary-400 transition-opacity duration-1000 ${
+                showWorkTherapy ? 'opacity-100' : 'opacity-0'
+              }`}>
+                작업치료
+              </span>
               <br />
-              미래를 만들어갑니다
+              <span className={`transition-opacity duration-1000 ${
+                showOtherText ? 'opacity-100' : 'opacity-0'
+              }`}>
+                미래를 만들어갑니다
+              </span>
             </h1>
-            <p className="text-xl md:text-2xl text-gray-300 mb-10 leading-relaxed max-w-xl">
-              연구와 실천을 통해 더 나은 미래를 만들어갑니다
+            <p className="text-base md:text-lg lg:text-xl text-gray-300 mb-10 leading-relaxed min-h-[3rem] md:whitespace-nowrap">
+              {typedText}
+              {showCursor && <span className="animate-pulse">|</span>}
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
