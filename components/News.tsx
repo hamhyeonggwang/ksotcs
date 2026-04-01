@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { getSupabaseRestConfig, supabaseRestGetSafe } from '@/lib/supabaseRest'
+import { getSupabaseRestConfig, supabaseRestGetSafeResult } from '@/lib/supabaseRest'
 
 type NoticeRow = {
   id: string
@@ -19,20 +19,26 @@ type ActivityPhotoRow = {
 export default async function News() {
   const cfg = getSupabaseRestConfig()
 
-  const [notices, photo] = await Promise.all([
+  const [noticesRes, photosRes] = await Promise.all([
     cfg
-      ? supabaseRestGetSafe<NoticeRow[]>(
+      ? supabaseRestGetSafeResult<NoticeRow[]>(
           '/rest/v1/notices?select=id,title,pdf_url,created_at&order=created_at.desc&limit=2',
           [],
         )
-      : Promise.resolve([] as NoticeRow[]),
+      : Promise.resolve({ data: [] as NoticeRow[], ok: true as const }),
     cfg
-      ? supabaseRestGetSafe<ActivityPhotoRow[]>(
+      ? supabaseRestGetSafeResult<ActivityPhotoRow[]>(
           '/rest/v1/activity_photos?select=id,image_url,caption,created_at&order=created_at.desc&limit=1',
           [],
-        ).then((arr) => arr[0] ?? null)
-      : Promise.resolve(null as ActivityPhotoRow | null),
+        )
+      : Promise.resolve({ data: [] as ActivityPhotoRow[], ok: true as const }),
   ])
+
+  const notices = noticesRes.ok ? noticesRes.data : []
+  const photo = photosRes.ok && photosRes.data[0] ? photosRes.data[0] : null
+  const supabaseLoadFailed = Boolean(cfg && (!noticesRes.ok || !photosRes.ok))
+  const supabaseLoadError =
+    !noticesRes.ok ? noticesRes.error : !photosRes.ok ? photosRes.error : ''
 
   const fallbackNoticeImages = ['/images/news-1.jpg', '/images/news-2.jpg']
 
@@ -42,6 +48,22 @@ export default async function News() {
       <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary-50 rounded-full blur-3xl opacity-50"></div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {supabaseLoadFailed ? (
+          <div
+            className="mb-8 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900"
+            role="status"
+          >
+            <p className="font-semibold">학회 소식 데이터를 불러오지 못했습니다.</p>
+            <p className="mt-1 text-amber-800/90">
+              Vercel 환경 변수에 Supabase URL·anon 키가 있는지, Supabase에서 해당 테이블에 읽기(RLS)가 허용돼 있는지
+              확인해 주세요.
+            </p>
+            {supabaseLoadError ? (
+              <p className="mt-2 font-mono text-xs text-amber-900/80 break-all">{supabaseLoadError}</p>
+            ) : null}
+          </div>
+        ) : null}
+
         <div className="flex justify-between items-start mb-16">
           <div>
             <div className="inline-block px-4 py-2 bg-primary-100 text-primary-700 rounded-full text-sm font-semibold mb-6">
