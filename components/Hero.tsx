@@ -57,16 +57,17 @@ export default function Hero() {
 
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden bg-black">
-      {/* Background Image with Overlay */}
-      <div className="absolute inset-0">
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30"
+      {/* 배경: 제공 이미지 + Ken Burns(확대·이동) 역동감 */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div
+          className="absolute -inset-[14%] bg-cover bg-no-repeat opacity-40 animate-hero-kenburns motion-reduce:animate-none bg-[position:58%_center] sm:bg-[position:55%_center]"
           style={{
-            // 교재·교구 중심의 따뜻한 책상 이미지
-            backgroundImage: `url('/images/hero-bg.jpg')`,
+            backgroundImage: `url('/images/hero-landing.png')`,
           }}
-        ></div>
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/80"></div>
+          aria-hidden
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/65 via-black/45 to-black/85" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-transparent to-black/25" />
       </div>
 
       {/* Geometric Shapes */}

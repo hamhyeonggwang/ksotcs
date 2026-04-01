@@ -33,16 +33,11 @@ const features = [
   },
 ]
 
-export default function Features() {
-  const images = [
-    // 학술지와 논문 - 학회지 안내용
-    '/images/feature-1.jpg',
-    // 알록달록한 문구류
-    '/images/feature-2.jpg',
-    // 교육용 카드와 교구
-    '/images/feature-3.jpg',
-  ]
+/** 랜딩 하단 3카드용 팬 이미지 — 왼쪽(학회지) / 중앙(학회소식) / 오른쪽(교육센터) 구간 */
+const FEATURES_PANORAMA = '/images/features-triptych.png'
+const PANORAMA_SLICE_POSITIONS = ['0% center', '50% center', '100% center'] as const
 
+export default function Features() {
   return (
     <section className="py-32 bg-gradient-to-b from-white via-gray-50 to-white relative overflow-hidden">
       {/* Background Decoration */}
@@ -73,10 +68,12 @@ export default function Features() {
             >
               {/* Image Background */}
               <div className="relative h-64 overflow-hidden">
-                <div 
-                  className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                <div
+                  className="absolute inset-0 bg-no-repeat transition-transform duration-700 group-hover:scale-110"
                   style={{
-                    backgroundImage: `url('${images[index]}')`,
+                    backgroundImage: `url('${FEATURES_PANORAMA}')`,
+                    backgroundSize: '300% 100%',
+                    backgroundPosition: PANORAMA_SLICE_POSITIONS[index] ?? '50% center',
                   }}
                 ></div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>

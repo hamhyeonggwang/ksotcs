@@ -8,6 +8,16 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      keyframes: {
+        'hero-kenburns': {
+          '0%': { transform: 'scale(1) translate(0%, 0%)' },
+          '50%': { transform: 'scale(1.12) translate(-2.5%, -1.5%)' },
+          '100%': { transform: 'scale(1.06) translate(1.5%, 1%)' },
+        },
+      },
+      animation: {
+        'hero-kenburns': 'hero-kenburns 32s ease-in-out infinite alternate',
+      },
       colors: {
         primary: {
           50: '#f0f9ff',

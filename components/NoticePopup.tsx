@@ -37,9 +37,9 @@ export const NOTICE_POPUP_ITEMS: NoticeItem[] = [
   },
   {
     id: 'sample',
-    title: '[안내] 팝업 공지 예시',
+    title: '[안내] 진행중인 교육',
     body:
-      '대한작업치료사협회(www.kaot.org) 메인처럼 중요 안내를 팝업으로 노출할 수 있습니다. 공지 문구는 components/NoticePopup.tsx의 NOTICE_POPUP_ITEMS만 수정하면 됩니다.',
+      '진행중인 교육에서 접수 완료 명단을 확인하실 수 있습니다.',
     href: '/inquiry',
     linkLabel: '문의하기',
   },
