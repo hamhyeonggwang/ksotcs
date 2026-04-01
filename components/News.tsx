@@ -1,32 +1,38 @@
 import Link from 'next/link'
+import Image from 'next/image'
+import { getSupabaseRestConfig, supabaseRestGet } from '@/lib/supabaseRest'
 
-const newsItems = [
-  {
-    title: '(26-01) 장애 아동의 시지각 문제에 대한 이해와 중재',
-    date: '2026-02-24',
-    category: '공지사항',
-  },
-  {
-    title: '인지발달상담심리지도사 2급 교육 수료증 발급',
-    date: '2025-12-05',
-    category: '공지사항',
-  },
-  {
-    title: '인지발달심리상담지도사 2급 과정 명단 공지',
-    date: '2025-11-19',
-    category: '공지사항',
-  },
-]
+type NoticeRow = {
+  id: string
+  title: string
+  pdf_url: string
+  created_at: string
+}
 
-export default function News() {
-  const newsImages = [
-    // 공지사항 느낌의 노트와 펜
-    '/images/news-1.jpg',
-    // 회의·기록용 교재
-    '/images/news-2.jpg',
-    // 교육용 자료와 문서
-    '/images/news-3.jpg',
-  ]
+type ActivityPhotoRow = {
+  id: string
+  image_url: string
+  caption: string | null
+  created_at: string
+}
+
+export default async function News() {
+  const cfg = getSupabaseRestConfig()
+
+  const [notices, photo] = await Promise.all([
+    cfg
+      ? supabaseRestGet<NoticeRow[]>(
+          '/rest/v1/notices?select=id,title,pdf_url,created_at&order=created_at.desc&limit=2',
+        )
+      : Promise.resolve([] as NoticeRow[]),
+    cfg
+      ? supabaseRestGet<ActivityPhotoRow[]>(
+          '/rest/v1/activity_photos?select=id,image_url,caption,created_at&order=created_at.desc&limit=1',
+        ).then((arr) => arr[0] ?? null)
+      : Promise.resolve(null as ActivityPhotoRow | null),
+  ])
+
+  const fallbackNoticeImages = ['/images/news-1.jpg', '/images/news-2.jpg']
 
   return (
     <section className="py-32 bg-white relative overflow-hidden">
@@ -58,51 +64,109 @@ export default function News() {
         </div>
 
         <div className="grid md:grid-cols-3 gap-8">
-          {newsItems.map((item, index) => (
-            <Link
-              key={index}
-              href="/news"
-              className="group relative overflow-hidden bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2"
-            >
-              {/* Image */}
-              <div className="relative h-48 overflow-hidden">
-                <div 
-                  className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
-                  style={{
-                    backgroundImage: `url('${newsImages[index]}')`,
-                  }}
-                ></div>
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                
-                {/* Category Badge */}
-                <div className="absolute top-4 left-4">
-                  <span className="px-4 py-2 bg-white/90 backdrop-blur-sm text-primary-700 text-sm font-semibold rounded-full">
-                    {item.category}
-                  </span>
+          {/* 최신 교육공문 2개 */}
+          {(notices.length > 0 ? notices : [null, null]).slice(0, 2).map((n, index) => {
+            const title = n?.title ?? '등록된 교육공문이 없습니다'
+            const date = n?.created_at
+              ? new Date(n.created_at).toLocaleDateString('ko-KR', {
+                  year: 'numeric',
+                  month: '2-digit',
+                  day: '2-digit',
+                })
+              : ''
+            const bg = fallbackNoticeImages[index] ?? '/images/news-1.jpg'
+
+            return (
+              <Link
+                key={n?.id ?? `notice-fallback-${index}`}
+                href="/news"
+                className="group relative overflow-hidden bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2"
+              >
+                <div className="relative h-48 overflow-hidden">
+                  <div
+                    className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                    style={{ backgroundImage: `url('${bg}')` }}
+                  ></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+
+                  <div className="absolute top-4 left-4">
+                    <span className="px-4 py-2 bg-white/90 backdrop-blur-sm text-primary-700 text-sm font-semibold rounded-full">
+                      교육공문
+                    </span>
+                  </div>
+
+                  {date ? (
+                    <div className="absolute bottom-4 right-4">
+                      <span className="px-3 py-1 bg-black/50 backdrop-blur-sm text-white text-sm rounded-full">
+                        {date}
+                      </span>
+                    </div>
+                  ) : null}
                 </div>
 
-                {/* Date */}
-                <div className="absolute bottom-4 right-4">
-                  <span className="px-3 py-1 bg-black/50 backdrop-blur-sm text-white text-sm rounded-full">
-                    {item.date}
-                  </span>
+                <div className="p-6">
+                  <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-primary-600 transition-colors line-clamp-2 min-h-[3.5rem]">
+                    {title}
+                  </h3>
+                  <div className="flex items-center text-primary-600 font-semibold mt-4">
+                    자세히 보기
+                    <svg
+                      className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </div>
                 </div>
-              </div>
+              </Link>
+            )
+          })}
 
-              {/* Content */}
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-primary-600 transition-colors line-clamp-2 min-h-[3.5rem]">
-                  {item.title}
-                </h3>
-                <div className="flex items-center text-primary-600 font-semibold mt-4">
-                  자세히 보기
-                  <svg className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </div>
+          {/* 학회 활동 사진 1장 */}
+          <Link
+            href="/news#activity-photos-heading"
+            className="group relative overflow-hidden bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2"
+          >
+            <div className="relative h-48 overflow-hidden bg-gray-200">
+              {photo ? (
+                <Image
+                  src={photo.image_url}
+                  alt={photo.caption ?? '학회 활동 사진'}
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-110"
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                />
+              ) : (
+                <div className="absolute inset-0 bg-gradient-to-br from-primary-200 to-primary-400 opacity-40" />
+              )}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+
+              <div className="absolute top-4 left-4">
+                <span className="px-4 py-2 bg-white/90 backdrop-blur-sm text-primary-700 text-sm font-semibold rounded-full">
+                  활동 사진
+                </span>
               </div>
-            </Link>
-          ))}
+            </div>
+
+            <div className="p-6">
+              <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-primary-600 transition-colors line-clamp-2 min-h-[3.5rem]">
+                {photo?.caption ?? '학회 활동 사진을 확인하세요'}
+              </h3>
+              <div className="flex items-center text-primary-600 font-semibold mt-4">
+                자세히 보기
+                <svg
+                  className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </div>
+            </div>
+          </Link>
         </div>
 
         <div className="mt-8 text-center md:hidden">
