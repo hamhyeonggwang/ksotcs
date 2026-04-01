@@ -1,3 +1,5 @@
+'use client'
+
 import Link from 'next/link'
 
 export default function AboutPage() {
@@ -70,118 +72,36 @@ export default function AboutPage() {
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 pb-4 border-b-2 border-primary-200">
             조직도
           </h2>
+          <div className="overflow-x-auto">
+           <table className="w-full text-left border-collapse">
+           <thead>
+             <tr className="bg-primary-50">
+             <th className="p-4">구분</th>
+             <th className="p-4">직책</th>
+             <th className="p-4">이름</th>
+           </tr>
+    </thead>
+    <tbody>
+      <tr><td className="p-4">회장</td><td className="p-4">김진경</td><td className="p-4">한서대학교</td></tr>
+      <tr><td className="p-4">부회장</td><td className="p-4">박경영</td><td className="p-4">중원대학교</td></tr>
+
+      <tr><td className="p-4">이사진</td><td className="p-4">총무이사</td><td className="p-4">최강미</td></tr>
+      <tr><td className="p-4">   </td><td className="p-4">기획이사</td><td className="p-4">유영미</td></tr>
+      <tr><td className="p-4">   </td><td className="p-4">교재편찬이사</td><td className="p-4">이지연</td></tr>
+      <tr><td className="p-4">   </td><td className="p-4">재무이사</td><td className="p-4">김영란</td></tr>
+      <tr><td className="p-4">   </td><td className="p-4">대외협력이사</td><td className="p-4">김세연</td></tr>
+      <tr><td className="p-4">   </td><td className="p-4">국제이사</td><td className="p-4">주유미</td></tr>
+      <tr><td className="p-4">   </td><td className="p-4">교육이사1</td><td className="p-4">박윤이</td></tr>
+      <tr><td className="p-4">   </td><td className="p-4">교육이사2</td><td className="p-4">조선영</td></tr>
+
+      <tr><td className="p-4">감사</td><td className="p-4">최유임</td><td className="p-4">원광대학교</td></tr>
+
+      <tr><td className="p-4">고문</td><td className="p-4">고문</td><td className="p-4">이재신</td></tr>
+      <tr><td className="p-4">고문</td><td className="p-4">고문</td><td className="p-4">유은영</td></tr>
+    </tbody>
+  </table>
+</div>
           
-          <div className="flex justify-center">
-            <div className="relative w-full max-w-4xl">
-              <img 
-                src="/images/organization-chart.jpg" 
-                alt="대한아동학교작업치료학회 조직도"
-                className="w-full h-auto rounded-lg shadow-lg"
-                onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-                  // 이미지가 없을 경우 기본 텍스트 조직도 표시
-                  const target = e.target as HTMLImageElement
-                  target.style.display = 'none'
-                  const fallback = document.getElementById('organization-fallback')
-                  if (fallback) {
-                    fallback.classList.remove('hidden')
-                    fallback.classList.add('flex')
-                  }
-                }}
-              />
-              {/* 이미지가 없을 경우 표시할 폴백 */}
-              <div id="organization-fallback" className="hidden flex-col items-center space-y-8">
-                {/* 회장 */}
-                <div className="w-full max-w-md">
-                  <div className="bg-gradient-to-r from-primary-600 to-primary-800 rounded-2xl p-6 text-center shadow-lg">
-                    <div className="text-white">
-                      <div className="text-sm font-medium mb-2">회장</div>
-                      <div className="text-2xl font-bold">김진경</div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* 부회장 */}
-                <div className="w-full max-w-md">
-                  <div className="bg-gradient-to-r from-primary-500 to-primary-700 rounded-2xl p-6 text-center shadow-lg">
-                    <div className="text-white">
-                      <div className="text-sm font-medium mb-2">부회장</div>
-                      <div className="text-2xl font-bold">박경영</div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* 이사진 */}
-                <div className="w-full">
-                  <div className="text-center mb-6">
-                    <h3 className="text-xl font-bold text-gray-700 mb-4">이사진</h3>
-                  </div>
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div className="bg-primary-50 rounded-xl p-4 text-center border-2 border-primary-200 hover:shadow-md transition-shadow">
-                      <div className="text-sm font-medium text-primary-700 mb-1">총무이사</div>
-                      <div className="text-lg font-bold text-gray-900">최강미</div>
-                    </div>
-                    <div className="bg-primary-50 rounded-xl p-4 text-center border-2 border-primary-200 hover:shadow-md transition-shadow">
-                      <div className="text-sm font-medium text-primary-700 mb-1">기획이사</div>
-                      <div className="text-lg font-bold text-gray-900">유영미</div>
-                    </div>
-                    <div className="bg-primary-50 rounded-xl p-4 text-center border-2 border-primary-200 hover:shadow-md transition-shadow">
-                      <div className="text-sm font-medium text-primary-700 mb-1">교재편찬이사</div>
-                      <div className="text-lg font-bold text-gray-900">이지연</div>
-                    </div>
-                    <div className="bg-primary-50 rounded-xl p-4 text-center border-2 border-primary-200 hover:shadow-md transition-shadow">
-                      <div className="text-sm font-medium text-primary-700 mb-1">재무이사</div>
-                      <div className="text-lg font-bold text-gray-900">김영란</div>
-                    </div>
-                    <div className="bg-primary-50 rounded-xl p-4 text-center border-2 border-primary-200 hover:shadow-md transition-shadow">
-                      <div className="text-sm font-medium text-primary-700 mb-1">대외협력이사</div>
-                      <div className="text-lg font-bold text-gray-900">김세연</div>
-                    </div>
-                    <div className="bg-primary-50 rounded-xl p-4 text-center border-2 border-primary-200 hover:shadow-md transition-shadow">
-                      <div className="text-sm font-medium text-primary-700 mb-1">국제이사</div>
-                      <div className="text-lg font-bold text-gray-900">주유미</div>
-                    </div>
-                    <div className="bg-primary-50 rounded-xl p-4 text-center border-2 border-primary-200 hover:shadow-md transition-shadow">
-                      <div className="text-sm font-medium text-primary-700 mb-1">교육이사1</div>
-                      <div className="text-lg font-bold text-gray-900">박윤이</div>
-                    </div>
-                    <div className="bg-primary-50 rounded-xl p-4 text-center border-2 border-primary-200 hover:shadow-md transition-shadow">
-                      <div className="text-sm font-medium text-primary-700 mb-1">교육이사2</div>
-                      <div className="text-lg font-bold text-gray-900">조선영</div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* 감사 */}
-                <div className="w-full max-w-md mt-8">
-                  <div className="bg-gradient-to-r from-blue-600 to-blue-800 rounded-2xl p-6 text-center shadow-lg">
-                    <div className="text-white">
-                      <div className="text-sm font-medium mb-2">감사</div>
-                      <div className="text-2xl font-bold">최유임</div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* 고문 */}
-                <div className="w-full mt-8">
-                  <div className="text-center mb-6">
-                    <h3 className="text-xl font-bold text-gray-700 mb-4">고문</h3>
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl mx-auto">
-                    <div className="bg-gradient-to-r from-gray-600 to-gray-800 rounded-2xl p-6 text-center shadow-lg">
-                      <div className="text-white">
-                        <div className="text-2xl font-bold">이재신</div>
-                      </div>
-                    </div>
-                    <div className="bg-gradient-to-r from-gray-600 to-gray-800 rounded-2xl p-6 text-center shadow-lg">
-                      <div className="text-white">
-                        <div className="text-2xl font-bold">유은영</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
 
         {/* 연혁 */}

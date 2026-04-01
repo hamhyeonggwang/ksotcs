@@ -20,36 +20,37 @@ interface EducationSchedule {
   category: string
 }
 
+const EDUCATION_CENTER_SHOP_URL = 'https://ksotcs.co.kr/shop/'
+
 const schedules: EducationSchedule[] = [
   {
     id: '1',
     month: 3,
     monthName: '3월',
-    period: '3월말',
+    period: '3월28일',
     courseName: '인지발달심리상담지도사 아동발달평가사 (질환별 사례교육)',
-    educationName: '시지각',
-    educationTime: '2시간/2시간',
+    educationName: '장애 아동의 시지각 문제에 대한 이해와 중재',
+    educationTime: '14:00-18:00',
     instructor: '최강미, 안소현',
     director: '조선영',
     method: '실시간온라인',
-    target: '임상가',
+    target: '작업치료사 70명',
     category: '인지발달심리상담지도사',
   },
   {
     id: '2',
     month: 4,
     monthName: '4월',
-    period: '4월말',
+    period: '4월19일',
     courseName: '인지발달심리상담지도사 아동발달평가사 (질환별 사례교육)',
-    educationName: '질환별 사례교육',
-    educationTime: '3시간/3시간',
+    educationName: '질환별 장애아동의 이해와 중재 : 자폐스펙트럼장애 아동의 행동 중재와 사회기술훈련',
+    educationTime: '10:00-17:10',
     instructor: '유애리, ABA',
-    schedule: '4/19? 4/25? 토? 일?',
-    detailedTime: '13:00~? 16:00~?',
-    location: '서울역? 이름센터? 대전대?',
+    schedule: '4/19',
+    location: '서울창업허브 공덕 본관 9층 세미나실',
     director: '조선영',
     method: '오프라인',
-    target: '임상가, 학생',
+    target: '임상가, 학생, 40명',
     category: '인지발달심리상담지도사',
   },
   {
@@ -262,7 +263,17 @@ export default function EducationSchedulePage() {
                             >
                               <td className="py-4 px-4 text-gray-700">{schedule.period}</td>
                               <td className="py-4 px-4 text-gray-700">{schedule.courseName}</td>
-                              <td className="py-4 px-4 text-gray-700 font-medium">{schedule.educationName}</td>
+                              <td className="py-4 px-4 text-gray-700 font-medium">
+                                <a
+                                  href={EDUCATION_CENTER_SHOP_URL}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="text-primary-700 hover:text-primary-800 hover:underline underline-offset-2"
+                                  aria-label={`${schedule.educationName} - 교육센터로 이동`}
+                                >
+                                  {schedule.educationName}
+                                </a>
+                              </td>
                               <td className="py-4 px-4 text-gray-700">{schedule.educationTime}</td>
                               <td className="py-4 px-4 text-gray-700">
                                 <span className="px-3 py-1 bg-primary-100 text-primary-700 rounded-full text-sm font-medium">
