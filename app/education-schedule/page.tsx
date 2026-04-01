@@ -120,7 +120,7 @@ const schedules: EducationSchedule[] = [
     director: '조선영',
     method: '온라인 녹화',
     target: '임상가, 학생',
-    category: '인지발달상담지도사',
+    category: '인지발달심리상담지도사',
   },
 ]
 
@@ -128,7 +128,6 @@ const categories = [
   '전체',
   '인지발달심리상담지도사',
   '아동발달평가사',
-  '인지발달상담지도사',
 ]
 
 export default function EducationSchedulePage() {
