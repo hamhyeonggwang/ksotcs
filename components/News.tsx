@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { getSupabaseRestConfig, supabaseRestGet } from '@/lib/supabaseRest'
+import { getSupabaseRestConfig, supabaseRestGetSafe } from '@/lib/supabaseRest'
 
 type NoticeRow = {
   id: string
@@ -21,13 +21,15 @@ export default async function News() {
 
   const [notices, photo] = await Promise.all([
     cfg
-      ? supabaseRestGet<NoticeRow[]>(
+      ? supabaseRestGetSafe<NoticeRow[]>(
           '/rest/v1/notices?select=id,title,pdf_url,created_at&order=created_at.desc&limit=2',
+          [],
         )
       : Promise.resolve([] as NoticeRow[]),
     cfg
-      ? supabaseRestGet<ActivityPhotoRow[]>(
+      ? supabaseRestGetSafe<ActivityPhotoRow[]>(
           '/rest/v1/activity_photos?select=id,image_url,caption,created_at&order=created_at.desc&limit=1',
+          [],
         ).then((arr) => arr[0] ?? null)
       : Promise.resolve(null as ActivityPhotoRow | null),
   ])

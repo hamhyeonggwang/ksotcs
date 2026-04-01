@@ -1,3 +1,13 @@
+function supabaseStorageHostname() {
+  const raw = process.env.NEXT_PUBLIC_SUPABASE_URL
+  if (!raw) return 'ldbzgwrabwqvnwfbbiyk.supabase.co'
+  try {
+    return new URL(raw).hostname
+  } catch {
+    return 'ldbzgwrabwqvnwfbbiyk.supabase.co'
+  }
+}
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -5,7 +15,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'ldbzgwrabwqvnwfbbiyk.supabase.co',
+        hostname: supabaseStorageHostname(),
         pathname: '/**',
       },
     ],

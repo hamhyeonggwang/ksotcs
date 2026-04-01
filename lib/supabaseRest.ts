@@ -35,3 +35,18 @@ export async function supabaseRestGet<T>(pathAndQuery: string): Promise<T> {
   return (await res.json()) as T
 }
 
+/**
+ * 서버 컴포넌트·정적 페이지에서 사용: Supabase/네트워크 오류 시 예외를 던지지 않고 fallback을 돌려
+ * 배포 환경에서 키·RLS·일시 장애로 인한 전체 500을 막습니다.
+ */
+export async function supabaseRestGetSafe<T>(pathAndQuery: string, fallback: T): Promise<T> {
+  try {
+    return await supabaseRestGet<T>(pathAndQuery)
+  } catch (err) {
+    if (process.env.NODE_ENV === 'development') {
+      console.error('[supabaseRestGetSafe]', pathAndQuery, err)
+    }
+    return fallback
+  }
+}
+
