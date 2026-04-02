@@ -12,7 +12,7 @@ export default function CertificationPage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* 1. 아동발달평가사 */}
           <div className="bg-white rounded-2xl shadow-xl p-8 md:p-10 border border-gray-100">
             <div className="flex items-start justify-between gap-4">
@@ -71,35 +71,8 @@ export default function CertificationPage() {
             </div>
           </div>
 
-          {/* 3. 자격과정 신규 — lg에서 3열의 세 번째, md에서는 2열 그리드에서 한 줄 전체 */}
-          <div className="bg-white rounded-2xl shadow-xl p-8 md:p-10 border border-gray-100 border-dashed border-primary-200 ring-1 ring-primary-100/80 md:col-span-2 lg:col-span-1">
-            <div className="flex items-start justify-between gap-4">
-              <div>
-                <h2 className="text-2xl md:text-3xl font-bold text-gray-900">자격과정 신규</h2>
-                <p className="mt-1 text-sm font-semibold text-primary-700">New qualification programs</p>
-              </div>
-              <span className="shrink-0 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-sm font-semibold">
-                신규
-              </span>
-            </div>
-
-            <div className="mt-5 space-y-4 text-gray-700 leading-relaxed">
-              <p>
-                학회에서 새롭게 안내·운영하는 민간자격과정에 대한 공지, 교육 일정, 신청 방법 등은 본 섹션과{' '}
-                <span className="font-semibold text-gray-900">학회소식</span>을 통해 순차적으로 안내드립니다.
-              </p>
-              <div className="border-t pt-4">
-                <p className="font-semibold text-gray-900 mb-2">안내 예정</p>
-                <p>
-                  구체적인 과정명·이수 조건·시험 일정은 확정되는 대로 교육 공문 및 홈페이지 공지로 게시됩니다. 문의는
-                  학회 사무국으로 연락 바랍니다.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* 4. 자격시험 안내 */}
-          <div className="bg-white rounded-2xl shadow-xl p-8 md:p-10 border border-gray-100 md:col-span-2 lg:col-span-3">
+          {/* 3. 자격시험 안내 */}
+          <div className="bg-white rounded-2xl shadow-xl p-8 md:p-10 border border-gray-100 md:col-span-2">
             <div className="flex items-start justify-between gap-4">
               <div>
                 <h2 className="text-2xl md:text-3xl font-bold text-gray-900">자격시험 안내</h2>

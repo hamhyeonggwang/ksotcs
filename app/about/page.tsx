@@ -76,28 +76,35 @@ export default function AboutPage() {
            <table className="w-full text-left border-collapse">
            <thead>
              <tr className="bg-primary-50">
-             <th className="p-4">구분</th>
              <th className="p-4">직책</th>
              <th className="p-4">이름</th>
+             <th className="p-4">소속</th>
            </tr>
     </thead>
     <tbody>
-      <tr><td className="p-4">회장</td><td className="p-4">김진경</td><td className="p-4">한서대학교</td></tr>
-      <tr><td className="p-4">부회장</td><td className="p-4">박경영</td><td className="p-4">중원대학교</td></tr>
+      <tr><td className="p-4">회장</td><td className="p-4">김진경</td><td className="p-4">한서대학교 작업치료학과</td></tr>
+      <tr><td className="p-4">부회장</td><td className="p-4">박경영</td><td className="p-4">중원대학교 작업치료학과</td></tr>
+      <tr><td className="p-4">총무이사</td><td className="p-4">최강미</td><td className="p-4">더나은 아동발달센터</td></tr>
+      <tr><td className="p-4">기획이사</td><td className="p-4">유영미</td><td className="p-4">사회성그룹발달센터 꿈, 키우다</td></tr>
+      <tr><td className="p-4">교재편찬이사</td><td className="p-4">이지연</td><td className="p-4">동남보건대학교 작업치료학과</td></tr>
+      <tr><td className="p-4">재무이사</td><td className="p-4">김영란</td><td className="p-4">사회성그룹발달센터 꿈, 키우다</td></tr>
+      <tr><td className="p-4">대외협력이사</td><td className="p-4">김세연</td><td className="p-4">우석대학교 물리치료학과</td></tr>
+      <tr><td className="p-4">국제이사</td><td className="p-4">주유미</td><td className="p-4">가천대학교 특수치료대학원</td></tr>
+      <tr><td className="p-4">교육이사1</td><td className="p-4">박윤이</td><td className="p-4">동남보건대학교 작업치료학과</td></tr>
+      <tr><td className="p-4">교육이사2</td><td className="p-4">조선영</td><td className="p-4">조선영 상지대학교 작업치료학과</td></tr>
+      <tr><td className="p-4">정보이사</td><td className="p-4">박태혁</td><td className="p-4">푸르메재단 종로푸르메센터</td></tr>
+      <tr><td className="p-4">임상이사</td><td className="p-4">함형광</td><td className="p-4">푸르메재단 넥슨어린이재활병원</td></tr>
 
-      <tr><td className="p-4">이사진</td><td className="p-4">총무이사</td><td className="p-4">최강미</td></tr>
-      <tr><td className="p-4">   </td><td className="p-4">기획이사</td><td className="p-4">유영미</td></tr>
-      <tr><td className="p-4">   </td><td className="p-4">교재편찬이사</td><td className="p-4">이지연</td></tr>
-      <tr><td className="p-4">   </td><td className="p-4">재무이사</td><td className="p-4">김영란</td></tr>
-      <tr><td className="p-4">   </td><td className="p-4">대외협력이사</td><td className="p-4">김세연</td></tr>
-      <tr><td className="p-4">   </td><td className="p-4">국제이사</td><td className="p-4">주유미</td></tr>
-      <tr><td className="p-4">   </td><td className="p-4">교육이사1</td><td className="p-4">박윤이</td></tr>
-      <tr><td className="p-4">   </td><td className="p-4">교육이사2</td><td className="p-4">조선영</td></tr>
+      <tr><td className="p-4">감사</td><td className="p-4">최유임</td><td className="p-4">원광대학교 작업치료학과</td></tr>
 
-      <tr><td className="p-4">감사</td><td className="p-4">최유임</td><td className="p-4">원광대학교</td></tr>
+      <tr><td className="p-4">고문</td><td className="p-4">이재신</td><td className="p-4">이재신 작업치료학과</td></tr>
+      <tr><td className="p-4">고문</td><td className="p-4">유은영</td><td className="p-4">연세대학교 작업치료학과</td></tr>
 
-      <tr><td className="p-4">고문</td><td className="p-4">고문</td><td className="p-4">이재신</td></tr>
-      <tr><td className="p-4">고문</td><td className="p-4">고문</td><td className="p-4">유은영</td></tr>
+      <tr><td className="p-4">일반이사</td><td className="p-4">김정란</td><td className="p-4">동남보건대학교 작업치료학과</td></tr>
+      <tr><td className="p-4">일반이사</td><td className="p-4">박혜연</td><td className="p-4">연세대학교 작업치료학과</td></tr>
+
+      <tr><td className="p-4">간사</td><td className="p-4">신채은</td><td className="p-4"></td></tr>
+      <tr><td className="p-4">간사</td><td className="p-4">설예림</td><td className="p-4"></td></tr>
     </tbody>
   </table>
 </div>
