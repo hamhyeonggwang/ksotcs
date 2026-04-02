@@ -273,6 +273,9 @@ export default function JournalPage() {
     setOpenItems(newOpenItems)
   }
 
+  const KSNOT_SEARCH_URL = 'http://www.ksnot.org/?c=5/98'
+  const KSNOT_SUBMISSION_URL = 'http://sm.ksnot.scholars.link/admin/login.php'
+
   return (
     <div className="pt-32 pb-24 min-h-screen bg-gradient-to-b from-white to-primary-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -287,7 +290,9 @@ export default function JournalPage() {
         </div>
 
         <div className="max-w-4xl mx-auto space-y-4">
-          {accordionItems.map((item) => {
+          {accordionItems
+            .filter((item) => item.id !== 'guidelines' && item.id !== 'ethics')
+            .map((item) => {
             const isOpen = openItems.has(item.id)
             return (
               <div
@@ -295,7 +300,22 @@ export default function JournalPage() {
                 className="bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl"
               >
                 <button
-                  onClick={() => toggleItem(item.id)}
+                  onClick={() => {
+                    // 학회지검색/논문투고 안내는 아코디언 토글 대신 외부 페이지로 이동
+                    if (item.id === 'search') {
+                      window.open(KSNOT_SEARCH_URL, '_blank', 'noopener,noreferrer')
+                      return
+                    }
+                    if (item.id === 'submission') {
+                      window.open(
+                        KSNOT_SUBMISSION_URL,
+                        '_blank',
+                        'noopener,noreferrer',
+                      )
+                      return
+                    }
+                    toggleItem(item.id)
+                  }}
                   className="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-gray-50 transition-colors"
                 >
                   <div className="flex items-center gap-4">

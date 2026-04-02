@@ -106,10 +106,10 @@ export default function Footer() {
           <div>
             <h3 className="text-white font-bold text-lg mb-4">연락처</h3>
             <ul className="space-y-2 text-sm">
-              <li>대전광역시 유성구 도안대로 311</li>
-              <li>12층 4호(용계동)</li>
+              <li>대전광역시 서구 관저동로90번길 47</li>
+              <li>1106동 402호(관저동)</li>
               <li>대표번호: 010.7631.1778</li>
-              <li>사업자등록번호: 715-73-00391</li>
+              <li>사업자등록번호: 480-03-03349</li>
               <li>
                 <Link
                   href="/inquiry"

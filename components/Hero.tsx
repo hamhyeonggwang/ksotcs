@@ -173,8 +173,10 @@ export default function Hero() {
                     <div className="text-2xl font-bold text-white mb-2">학회 소식</div>
                     <div className="text-sm text-gray-300">최신 공지사항</div>
                   </Link>
-                  <Link
-                    href="/journal"
+                  <a
+                    href="http://sm.ksnot.scholars.link/admin/login.php"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 hover:bg-white/15 transition-all cursor-pointer"
                   >
                     <div className="w-12 h-12 bg-emerald-500 rounded-xl mb-4 flex items-center justify-center">
@@ -189,7 +191,7 @@ export default function Hero() {
                     </div>
                     <div className="text-2xl font-bold text-white mb-2">논문투고</div>
                     <div className="text-sm text-gray-300">투고 안내</div>
-                  </Link>
+                  </a>
                 </div>
               </div>
             </div>
