@@ -6,7 +6,6 @@ type NoticeRow = {
   id: string
   title: string
   pdf_url: string
-  created_at: string
 }
 
 type ActivityPhotoRow = {
@@ -84,7 +83,7 @@ export default function NewsPage() {
 async function EducationNoticesList() {
   try {
     const notices = await supabaseRestGet<NoticeRow[]>(
-      '/rest/v1/notices?select=id,title,pdf_url,created_at&order=created_at.desc&limit=50',
+      '/rest/v1/notices?select=id,title,pdf_url&order=created_at.desc&limit=50',
     )
 
     if (notices.length === 0) {
@@ -103,13 +102,6 @@ async function EducationNoticesList() {
               <div className="px-5 py-4 md:px-6 md:py-5 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
                 <div className="min-w-0 flex-1">
                   <p className="text-gray-900 font-semibold text-base md:text-lg leading-snug">{n.title}</p>
-                  <p className="mt-1 text-sm text-gray-500">
-                    {new Date(n.created_at).toLocaleDateString('ko-KR', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric',
-                    })}
-                  </p>
                 </div>
                 <div className="shrink-0">
                   <Link
