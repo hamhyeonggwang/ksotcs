@@ -21,9 +21,34 @@ type LookupRow = {
   id: string
   name: string
   status: string
+  /** Supabase `education_applicants` — 기존 호환용 */
   education_title?: string | null
+  /** Supabase에 추가하는 교육명 컬럼(권장: `education_name`) */
+  education_name?: string | null
   updated_at?: string | null
   created_at?: string | null
+}
+
+function educationLabel(row: LookupRow): string | null {
+  const v = row.education_name ?? row.education_title
+  if (typeof v === 'string' && v.trim()) return v.trim()
+  return null
+}
+
+const SELECT_APPLICANTS_WITH_EDU_NAME =
+  'id,name,status,education_title,education_name,updated_at,created_at'
+const SELECT_APPLICANTS_LEGACY = 'id,name,status,education_title,updated_at,created_at'
+
+function errorMessage(err: unknown): string {
+  if (err && typeof err === 'object' && 'message' in err) {
+    return String((err as { message?: string }).message ?? '')
+  }
+  return typeof err === 'string' ? err : ''
+}
+
+function looksLikeMissingEducationNameColumn(err: unknown): boolean {
+  const m = errorMessage(err).toLowerCase()
+  return m.includes('education_name') && (m.includes('does not exist') || m.includes('schema cache'))
 }
 
 function normalizeName(input: string) {
@@ -100,24 +125,34 @@ export default function EducationStatusLookupModal({
 
     setSubmitting(true)
     try {
-      // 1) “현재 접수 진행중인 교육”만 분리 컬럼이 있으면 우선 사용
-      const base = supabase
-        .from('education_applicants')
-        .select('id,name,status,education_title,updated_at,created_at')
-        .ilike('name', n)
-        .order('updated_at', { ascending: false })
-        .limit(10)
+      const fetchApplicants = async (selectCols: string): Promise<LookupRow[]> => {
+        const build = () =>
+          supabase
+            .from('education_applicants')
+            .select(selectCols)
+            .ilike('name', n)
+            .order('updated_at', { ascending: false })
+            .limit(10)
 
-      const { data, error: e1 } = await base.eq('is_current', true)
-      if (!e1) {
-        setRows((data ?? []) as LookupRow[])
-        return
+        // 1) “현재 접수 진행중인 교육”만 분리 컬럼이 있으면 우선 사용
+        const { data: d1, error: e1 } = await build().eq('is_current', true)
+        if (!e1) return ((d1 ?? []) as unknown) as LookupRow[]
+
+        // 2) is_current 컬럼이 없거나 정책상 불가하면, 이름으로만 조회
+        const { data: d2, error: e2 } = await build()
+        if (e2) throw e2
+        return ((d2 ?? []) as unknown) as LookupRow[]
       }
 
-      // 2) is_current 컬럼이 없거나 정책상 불가하면, 이름으로만 조회
-      const { data: data2, error: e2 } = await base
-      if (e2) throw e2
-      setRows((data2 ?? []) as LookupRow[])
+      try {
+        setRows(await fetchApplicants(SELECT_APPLICANTS_WITH_EDU_NAME))
+      } catch (e) {
+        if (looksLikeMissingEducationNameColumn(e)) {
+          setRows(await fetchApplicants(SELECT_APPLICANTS_LEGACY))
+        } else {
+          throw e
+        }
+      }
     } catch (e: any) {
       setError(typeof e?.message === 'string' ? e.message : '조회 중 오류가 발생했습니다.')
     } finally {
@@ -198,12 +233,13 @@ export default function EducationStatusLookupModal({
                 <ul className="space-y-3">
                   {rows.map((r) => {
                     const message = statusMap[r.status] ?? '상태를 확인해 주세요.'
+                    const edu = educationLabel(r)
                     return (
                       <li key={r.id} className="rounded-2xl border border-gray-200 bg-white px-5 py-4 shadow-sm">
                         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
                           <div className="min-w-0">
-                            {r.education_title ? (
-                              <p className="text-sm text-gray-500">교육: {r.education_title}</p>
+                            {edu ? (
+                              <p className="text-sm font-medium text-primary-700">교육명: {edu}</p>
                             ) : null}
                             <p className="text-gray-900 font-semibold leading-snug">
                               {r.name} 님<br />
