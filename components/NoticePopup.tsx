@@ -37,11 +37,11 @@ export const NOTICE_POPUP_ITEMS: NoticeItem[] = [
   },
   {
     id: 'sample',
-    title: '[안내] 진행중인 교육',
+    title: '[추가 모집 안내]질환별 장애아동의 이해와 중재 ASD 아동의 행동 중재와 사회기술훈련 ',
     body:
-      '진행중인 교육에서 접수 완료 명단을 확인하실 수 있습니다.',
+      '4/6(월) ~ 4/10(금) 추가모집.',
     href: '/inquiry',
-    linkLabel: '문의하기',
+    linkLabel: '교육센터',
   },
 ]
 
