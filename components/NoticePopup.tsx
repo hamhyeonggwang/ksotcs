@@ -40,7 +40,7 @@ export const NOTICE_POPUP_ITEMS: NoticeItem[] = [
     title: '[추가 모집 안내]질환별 장애아동의 이해와 중재 ASD 아동의 행동 중재와 사회기술훈련 ',
     body:
       '4/6(월) ~ 4/10(금) 추가모집.',
-    href: '/inquiry',
+    href: '/educcation-schedule',
     linkLabel: '교육센터',
   },
 ]
