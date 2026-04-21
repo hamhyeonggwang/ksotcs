@@ -63,8 +63,8 @@ const schedules: EducationSchedule[] = [
     educationTime: '09:00-16:00',
     instructor: '김영호, 윤인진',
     schedule: '5/30',
-    location : '줌온라인'
-    director: '박윤이'
+    location : '줌온라인',
+    director: '박윤이',
     method: '온라인실시간',
     target: '임상가, 학생',
     category: '인지발달심리상담지도사',
