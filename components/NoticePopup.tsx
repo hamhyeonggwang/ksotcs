@@ -28,19 +28,20 @@ export type NoticeItem = {
 /** 랜딩 팝업에 표시할 공지 목록 (필요 시 여기만 수정) */
 export const NOTICE_POPUP_ITEMS: NoticeItem[] = [
   {
-    id: 'welcome',
-    title: '대한아동학교작업치료학회 홈페이지를 방문해 주셔서 감사합니다',
+    id: 'NOTICE_01',
+    title: '질환별 장애아동의 이해와 중재 조산 & 뇌성마비 아동 작업치료료',
     body:
-      '학회 소식·교육 일정·문의 등은 상단 메뉴에서 확인하실 수 있습니다. 자주 찾는 안내는 공지사항에도 올려 드릴 예정입니다.',
+      '교육관련 공문은 학회소식 페이지에서 확인하실 수 있습니다.',
     href: '/news',
     linkLabel: '학회소식 보기',
   },
   {
-    id: 'sample',
-    title: '[추가 모집 안내]질환별 장애아동의 이해와 중재 ASD 아동의 행동 중재와 사회기술훈련 ',
-    body:
-      '4/6(월) ~ 4/10(금) 추가모집.',
-    href: '/center',
+    id: 'NOTICE_02',
+    title: '학회 홈페이지 이용안내',
+    body: 
+    '교육관련 접수는 교육센터 페이지를 참고하세요요.',
+     
+    href: 'http://ksotcs.co.kr',
     linkLabel: '교육센터',
   },
 ]
