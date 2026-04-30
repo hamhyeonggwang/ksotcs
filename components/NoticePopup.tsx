@@ -1,4 +1,4 @@
-'use client'
+                                                             'use client'
 
 import { useCallback, useEffect, useState } from 'react'
 import Link from 'next/link'
@@ -31,7 +31,7 @@ export const NOTICE_POPUP_ITEMS: NoticeItem[] = [
     id: 'NOTICE_01',
     title: '질환별 장애아동의 이해와 중재 조산 & 뇌성마비 아동 작업치료료',
     body:
-      '교육관련 공문은 학회소식 페이지에서 확인하실 수 있습니다.',
+      '접수기간 연장 ~5/7.',
     href: '/news',
     linkLabel: '학회소식 보기',
   },
