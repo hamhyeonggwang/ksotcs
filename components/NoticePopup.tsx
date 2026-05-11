@@ -31,13 +31,13 @@ export const NOTICE_POPUP_ITEMS: NoticeItem[] = [
     id: 'NOTICE_01',
     title: '질환별 장애아동의 이해와 중재 조산 & 뇌성마비 아동 작업치료료',
     body:
-      '접수기간 연장 ~5/7.',
+      '명단 조회 > 진행중인 교육 > 이름 검색.',
     href: '/news',
-    linkLabel: '학회소식 보기',
+    linkLabel: '진행중인 교육',
   },
   {
     id: 'NOTICE_02',
-    title: '학회 홈페이지 이용안내',
+    title: '(접수중)작업수행 기반 효과적인 부모상담 기법과 사례: 작업수행코칭(OPC)모델 중심으로',
     body: 
     '교육관련 접수는 교육센터 페이지를 참고하세요요.',
      
