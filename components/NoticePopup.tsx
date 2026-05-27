@@ -39,7 +39,7 @@ export const NOTICE_POPUP_ITEMS: NoticeItem[] = [
     id: 'NOTICE_02',
     title: '(접수중)작업수행 기반 효과적인 부모상담 기법과 사례: 작업수행코칭(OPC)모델 중심으로',
     body: 
-    '교육관련 접수는 교육센터 페이지를 참고하세요요.',
+    '추가접수 ~ 6/4 .',
      
     href: 'http://ksotcs.co.kr',
     linkLabel: '교육센터',
