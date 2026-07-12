@@ -7,6 +7,7 @@ const menuItems = [
   { name: '학회소개', href: '/about' },
   { name: '학회지 안내', href: '/journal' },
   { name: '학회소식', href: '/news' },
+  { name: '공지사항', href: '/notices' },
   { name: '교육센터', href: 'http://ksotcs.co.kr' },
   { name: '민간자격과정 안내', href: '/certification' },
   { name: '연간교육일정', href: '/education-schedule' },

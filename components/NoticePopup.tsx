@@ -1,10 +1,8 @@
-                                                             'use client'
+'use client'
 
 import { useCallback, useEffect, useState } from 'react'
 import Link from 'next/link'
-
-/** 공지 내용을 바꿀 때마다 숫자를 올리면, ‘오늘 하루 안 보기’를 눌렀던 사용자도 새 공지를 다시 볼 수 있습니다. */
-const POPUP_VERSION = '1'
+import { popupFingerprint, type PopupItem } from '@/lib/popupWindow'
 
 const STORAGE_VERSION = 'ksotcs-notice-popup-version'
 const STORAGE_HIDDEN_DAY = 'ksotcs-notice-popup-hidden-day'
@@ -17,46 +15,25 @@ function todayLocalDate(): string {
   return `${y}-${m}-${day}`
 }
 
-export type NoticeItem = {
-  id: string
-  title: string
-  body: string
-  href?: string
-  linkLabel?: string
-}
-
-/** 랜딩 팝업에 표시할 공지 목록 (필요 시 여기만 수정) */
-export const NOTICE_POPUP_ITEMS: NoticeItem[] = [
-  {
-    id: 'NOTICE_01',
-    title: '질환별 장애아동의 이해와 중재 조산 & 뇌성마비 아동 작업치료료',
-    body:
-      '명단 조회 > 진행중인 교육 > 이름 검색.',
-    href: '/news',
-    linkLabel: '진행중인 교육',
-  },
-  {
-    id: 'NOTICE_02',
-    title: '(접수중)작업수행 기반 효과적인 부모상담 기법과 사례: 작업수행코칭(OPC)모델 중심으로',
-    body: 
-    '추가접수 ~ 6/4 .',
-     
-    href: 'http://ksotcs.co.kr',
-    linkLabel: '교육센터',
-  },
-]
-
-export default function NoticePopup() {
+/**
+ * 랜딩 팝업. 항목은 관리자 대시보드(/admin/popups)에서 관리하며 서버에서 조회해 props로 전달됩니다.
+ * '오늘 하루 안 보기' 버전은 항목 지문(id:updated_at)으로 자동 계산되어,
+ * 팝업 내용이 바뀌면 숨김이 자동 해제됩니다.
+ */
+export default function NoticePopup({ items }: { items: PopupItem[] }) {
   const [open, setOpen] = useState(false)
   const [index, setIndex] = useState(0)
 
+  const version = popupFingerprint(items)
+
   useEffect(() => {
+    if (items.length === 0) return
     try {
       const ver = localStorage.getItem(STORAGE_VERSION)
       const hiddenDay = localStorage.getItem(STORAGE_HIDDEN_DAY)
       const today = todayLocalDate()
 
-      if (ver !== POPUP_VERSION) {
+      if (ver !== version) {
         setOpen(true)
         return
       }
@@ -68,7 +45,7 @@ export default function NoticePopup() {
     } catch {
       setOpen(true)
     }
-  }, [])
+  }, [items.length, version])
 
   useEffect(() => {
     if (!open) return
@@ -81,13 +58,13 @@ export default function NoticePopup() {
 
   const hideForToday = useCallback(() => {
     try {
-      localStorage.setItem(STORAGE_VERSION, POPUP_VERSION)
+      localStorage.setItem(STORAGE_VERSION, version)
       localStorage.setItem(STORAGE_HIDDEN_DAY, todayLocalDate())
     } catch {
       /* ignore */
     }
     setOpen(false)
-  }, [])
+  }, [version])
 
   const closeOnly = useCallback(() => {
     setOpen(false)
@@ -102,10 +79,10 @@ export default function NoticePopup() {
     return () => window.removeEventListener('keydown', onKey)
   }, [open, closeOnly])
 
-  if (!open || NOTICE_POPUP_ITEMS.length === 0) return null
+  if (!open || items.length === 0) return null
 
-  const total = NOTICE_POPUP_ITEMS.length
-  const current = NOTICE_POPUP_ITEMS[index]!
+  const total = items.length
+  const current = items[Math.min(index, total - 1)]!
 
   const goPrev = () => setIndex((i) => (i - 1 + total) % total)
   const goNext = () => setIndex((i) => (i + 1) % total)
@@ -157,14 +134,14 @@ export default function NoticePopup() {
           <h3 className="text-base font-bold text-gray-900 leading-snug">{current.title}</h3>
           <p className="mt-3 text-sm text-gray-700 whitespace-pre-wrap leading-relaxed">{current.body}</p>
 
-          {current.href && (
+          {current.link_href && (
             <div className="mt-4">
               <Link
-                href={current.href}
+                href={current.link_href}
                 className="inline-flex text-sm font-semibold text-primary-700 hover:text-primary-800 underline underline-offset-2"
                 onClick={closeOnly}
               >
-                {current.linkLabel ?? '자세히 보기'}
+                {current.link_label ?? '자세히 보기'}
               </Link>
             </div>
           )}
@@ -172,7 +149,7 @@ export default function NoticePopup() {
 
         {total > 1 && (
           <div className="flex justify-center gap-1.5 pb-3">
-            {NOTICE_POPUP_ITEMS.map((item, i) => (
+            {items.map((item, i) => (
               <button
                 key={item.id}
                 type="button"
