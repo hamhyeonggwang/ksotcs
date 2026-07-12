@@ -23,6 +23,26 @@ create table if not exists public.education_schedules (
   updated_at timestamptz not null default now()
 );
 
+-- education_schedules가 이미 다른 용도로 존재하던 경우를 대비해 누락된 컬럼을 보강합니다.
+alter table public.education_schedules add column if not exists year int not null default 2026;
+alter table public.education_schedules add column if not exists month int not null default 1;
+alter table public.education_schedules add column if not exists period text not null default '';
+alter table public.education_schedules add column if not exists course_name text not null default '';
+alter table public.education_schedules add column if not exists education_name text not null default '';
+alter table public.education_schedules add column if not exists education_time text not null default '';
+alter table public.education_schedules add column if not exists instructor text;
+alter table public.education_schedules add column if not exists schedule_note text;
+alter table public.education_schedules add column if not exists detailed_time text;
+alter table public.education_schedules add column if not exists location text;
+alter table public.education_schedules add column if not exists director text not null default '';
+alter table public.education_schedules add column if not exists method text not null default '';
+alter table public.education_schedules add column if not exists target text not null default '';
+alter table public.education_schedules add column if not exists category text not null default '';
+alter table public.education_schedules add column if not exists sort_order int not null default 0;
+alter table public.education_schedules add column if not exists is_visible boolean not null default true;
+alter table public.education_schedules add column if not exists created_at timestamptz not null default now();
+alter table public.education_schedules add column if not exists updated_at timestamptz not null default now();
+
 drop trigger if exists education_schedules_set_updated_at on public.education_schedules;
 create trigger education_schedules_set_updated_at
   before update on public.education_schedules

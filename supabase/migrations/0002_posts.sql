@@ -21,6 +21,13 @@ create table if not exists public.posts (
   updated_at timestamptz not null default now()
 );
 
+-- posts 테이블이 이미 다른 용도로 존재하던 경우를 대비해 누락된 컬럼을 보강합니다.
+alter table public.posts add column if not exists title text not null default '';
+alter table public.posts add column if not exists body text not null default '';
+alter table public.posts add column if not exists is_published boolean not null default true;
+alter table public.posts add column if not exists created_at timestamptz not null default now();
+alter table public.posts add column if not exists updated_at timestamptz not null default now();
+
 drop trigger if exists posts_set_updated_at on public.posts;
 create trigger posts_set_updated_at
   before update on public.posts

@@ -15,6 +15,18 @@ create table if not exists public.popups (
   updated_at timestamptz not null default now()
 );
 
+-- popups가 이미 다른 용도로 존재하던 경우를 대비해 누락된 컬럼을 보강합니다.
+alter table public.popups add column if not exists title text not null default '';
+alter table public.popups add column if not exists body text not null default '';
+alter table public.popups add column if not exists link_href text;
+alter table public.popups add column if not exists link_label text;
+alter table public.popups add column if not exists starts_at date;
+alter table public.popups add column if not exists ends_at date;
+alter table public.popups add column if not exists sort_order int not null default 0;
+alter table public.popups add column if not exists is_active boolean not null default true;
+alter table public.popups add column if not exists created_at timestamptz not null default now();
+alter table public.popups add column if not exists updated_at timestamptz not null default now();
+
 drop trigger if exists popups_set_updated_at on public.popups;
 create trigger popups_set_updated_at
   before update on public.popups

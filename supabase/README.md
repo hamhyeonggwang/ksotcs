@@ -53,7 +53,13 @@ curl -X POST 'https://ldbzgwrabwqvnwfbbiyk.supabase.co/rest/v1/posts' \
 
 - 공개 페이지(`/news`, `/education-schedule`)가 정상 표시되는지 (읽기 정책 확인)
 
-## 4. 문제가 생겼을 때 (롤백)
+## 4. 자주 발생하는 오류
+
+**`ERROR: 42703: column "..." does not exist`**
+`posts`, `popups`, `education_schedules` 중 하나가 이미 다른 용도로 만들어져 있어 필요한 컬럼이 없는 경우입니다.
+해당 번호의 마이그레이션 파일을 다시 실행하면 누락된 컬럼을 자동으로 추가하도록 되어 있으니, **같은 파일을 한 번 더 그대로 실행**하면 해결됩니다. (idempotent이므로 재실행해도 안전합니다.)
+
+## 5. 문제가 생겼을 때 (롤백)
 
 신규 테이블만 제거하려면:
 
