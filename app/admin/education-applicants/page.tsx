@@ -28,6 +28,10 @@ async function runInChunks<T>(items: T[], size: number, fn: (chunk: T[]) => Prom
   }
 }
 
+function statusLabel(status: string): string {
+  return APPLICANT_STATUS_OPTIONS.find((o) => o.value === status)?.label ?? status
+}
+
 const inputClass =
   'w-full rounded-xl border border-gray-300 px-4 py-2.5 text-gray-900 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500'
 
@@ -54,6 +58,10 @@ export default function AdminEducationApplicantsPage() {
 
   const [deleteTarget, setDeleteTarget] = useState<EducationApplicantRow | null>(null)
   const [deleting, setDeleting] = useState(false)
+
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set())
+  const [bulkStatus, setBulkStatus] = useState(DEFAULT_STATUS)
+  const [bulkApplying, setBulkApplying] = useState(false)
 
   const load = useCallback(async () => {
     if (!supabase) return
@@ -270,6 +278,12 @@ export default function AdminEducationApplicantsPage() {
       if (error) throw error
       showToast('success', '삭제되었습니다.')
       setDeleteTarget(null)
+      setSelectedIds((prev) => {
+        if (!prev.has(deleteTarget.id)) return prev
+        const next = new Set(prev)
+        next.delete(deleteTarget.id)
+        return next
+      })
       await load()
     } catch (e: unknown) {
       showToast('error', errorMessage(e, '삭제 중 오류가 발생했습니다.'))
@@ -293,6 +307,52 @@ export default function AdminEducationApplicantsPage() {
       return true
     })
   }, [rows, filterEducation, filterStatus, searchName])
+
+  const toggleSelectOne = useCallback((id: string) => {
+    setSelectedIds((prev) => {
+      const next = new Set(prev)
+      if (next.has(id)) next.delete(id)
+      else next.add(id)
+      return next
+    })
+  }, [])
+
+  const allVisibleSelected = useMemo(
+    () => !!visibleRows && visibleRows.length > 0 && visibleRows.every((r) => selectedIds.has(r.id)),
+    [visibleRows, selectedIds],
+  )
+
+  const toggleSelectAllVisible = useCallback(() => {
+    if (!visibleRows || visibleRows.length === 0) return
+    setSelectedIds((prev) => {
+      const next = new Set(prev)
+      const allSelected = visibleRows.every((r) => next.has(r.id))
+      for (const r of visibleRows) {
+        if (allSelected) next.delete(r.id)
+        else next.add(r.id)
+      }
+      return next
+    })
+  }, [visibleRows])
+
+  const applyBulkStatus = useCallback(async () => {
+    if (!supabase || selectedIds.size === 0) return
+    const ids = Array.from(selectedIds)
+    setBulkApplying(true)
+    try {
+      await runInChunks(ids, INSERT_CHUNK_SIZE, async (chunk) => {
+        const { error } = await supabase.from('education_applicants').update({ status: bulkStatus }).in('id', chunk)
+        if (error) throw error
+      })
+      showToast('success', `${ids.length}건을 "${statusLabel(bulkStatus)}" 상태로 일괄 변경했습니다.`)
+      setSelectedIds(new Set())
+      await load()
+    } catch (e: unknown) {
+      showToast('error', errorMessage(e, '일괄 변경 중 오류가 발생했습니다.'))
+    } finally {
+      setBulkApplying(false)
+    }
+  }, [supabase, selectedIds, bulkStatus, showToast, load])
 
   return (
     <div className="space-y-8">
@@ -491,6 +551,53 @@ export default function AdminEducationApplicantsPage() {
           <p className="text-sm text-gray-500 ml-auto">{visibleRows ? `총 ${visibleRows.length}건` : ''}</p>
         </div>
 
+        {visibleRows && visibleRows.length > 0 && (
+          <div className="px-6 py-3 border-b border-gray-100 bg-white flex flex-wrap items-center gap-3">
+            <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
+              <input
+                type="checkbox"
+                checked={allVisibleSelected}
+                onChange={toggleSelectAllVisible}
+                className="h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+              />
+              전체 선택 (현재 목록 기준)
+            </label>
+
+            {selectedIds.size > 0 && (
+              <div className="flex items-center gap-2 ml-auto">
+                <span className="text-sm text-gray-600">{selectedIds.size}건 선택됨</span>
+                <select
+                  value={bulkStatus}
+                  onChange={(e) => setBulkStatus(e.target.value)}
+                  className="rounded-lg border border-gray-300 px-2.5 py-1.5 text-sm"
+                >
+                  {APPLICANT_STATUS_OPTIONS.map((o) => (
+                    <option key={o.value} value={o.value}>
+                      {o.label}
+                    </option>
+                  ))}
+                </select>
+                <button
+                  type="button"
+                  onClick={() => void applyBulkStatus()}
+                  disabled={bulkApplying}
+                  className="rounded-lg bg-primary-600 px-3 py-1.5 text-sm font-semibold text-white hover:bg-primary-700 disabled:opacity-60"
+                >
+                  {bulkApplying ? '변경 중...' : '선택 항목 상태 일괄 변경'}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setSelectedIds(new Set())}
+                  disabled={bulkApplying}
+                  className="rounded-lg border border-gray-200 px-3 py-1.5 text-sm font-semibold text-gray-600 hover:bg-gray-50 disabled:opacity-60"
+                >
+                  선택 해제
+                </button>
+              </div>
+            )}
+          </div>
+        )}
+
         {loadError ? (
           <p className="p-6 text-sm text-red-600">목록을 불러오지 못했습니다: {loadError}</p>
         ) : visibleRows === null ? (
@@ -501,6 +608,13 @@ export default function AdminEducationApplicantsPage() {
           <ul className="divide-y divide-gray-100">
             {visibleRows.map((row) => (
               <li key={row.id} className="px-6 py-4 flex flex-col lg:flex-row lg:items-center gap-3">
+                <input
+                  type="checkbox"
+                  checked={selectedIds.has(row.id)}
+                  onChange={() => toggleSelectOne(row.id)}
+                  aria-label={`${row.name} 선택`}
+                  className="h-4 w-4 shrink-0 rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+                />
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-2 flex-wrap">
                     <span className="font-semibold text-gray-900">{row.name}</span>
