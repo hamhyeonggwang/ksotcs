@@ -17,6 +17,12 @@ const SECTIONS: SectionCard[] = [
   { href: '/admin/popups', title: '팝업 관리', description: '홈 화면 팝업 공지의 내용·노출 기간·순서 설정', table: 'popups' },
   { href: '/admin/schedules', title: '교육일정 관리', description: '연간교육일정 등록·수정·노출 관리', table: 'education_schedules' },
   { href: '/admin/posts', title: '공지 게시판 관리', description: '일반 공지글 작성·게시 관리', table: 'posts' },
+  {
+    href: '/admin/education-applicants',
+    title: '교육대상자 명단 관리',
+    description: 'CSV 업로드로 최종 교육대상자 명단 등록 (홈페이지 이름 조회에 반영)',
+    table: 'education_applicants',
+  },
 ]
 
 export default function AdminHomePage() {

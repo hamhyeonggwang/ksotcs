@@ -16,6 +16,7 @@ const NAV_ITEMS = [
   { href: '/admin/popups', label: '팝업 관리' },
   { href: '/admin/schedules', label: '교육일정 관리' },
   { href: '/admin/posts', label: '공지 게시판 관리' },
+  { href: '/admin/education-applicants', label: '교육대상자 명단 관리' },
 ] as const
 
 export default function AdminGuard({ children }: { children: ReactNode }) {

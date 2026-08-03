@@ -59,6 +59,26 @@ export type EducationScheduleRow = {
   updated_at: string
 }
 
+export type EducationApplicantRow = {
+  id: string
+  name: string
+  email: string | null
+  education_name: string
+  status: string
+  is_current: boolean
+  created_at: string
+  updated_at: string
+}
+
+/** 홈페이지 조회 모달(EducationStatusLookupModal)이 인식하는 상태값 */
+export const APPLICANT_STATUS_OPTIONS = [
+  { value: 'selected', label: '교육 대상자로 확인됨' },
+  { value: 'review', label: '명단 확인 중' },
+  { value: 'pending', label: '입금 확인 필요' },
+  { value: 'completed', label: '등록 완료' },
+  { value: 'open', label: '접수 진행중' },
+] as const
+
 /** unknown 에러에서 사용자에게 보여줄 메시지를 추출 */
 export function errorMessage(e: unknown, fallback: string): string {
   if (e instanceof Error && e.message) return e.message
