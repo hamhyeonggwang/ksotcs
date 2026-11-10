@@ -61,10 +61,12 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [quickOpen, setQuickOpen] = useState(false)
   const [lookupOpen, setLookupOpen] = useState(false)
+  const [openDesktopGroup, setOpenDesktopGroup] = useState<string | null>(null)
 
   useEffect(() => {
     setMobileOpen(false)
     setQuickOpen(false)
+    setOpenDesktopGroup(null)
   }, [pathname])
 
   useEffect(() => {
@@ -72,6 +74,7 @@ export default function Navbar() {
       if (event.key !== 'Escape') return
       setMobileOpen(false)
       setQuickOpen(false)
+      setOpenDesktopGroup(null)
     }
     window.addEventListener('keydown', onKeyDown)
     return () => window.removeEventListener('keydown', onKeyDown)
@@ -90,7 +93,12 @@ export default function Navbar() {
             </div>
           </div>
           <nav className="desktop-nav" aria-label="주요 메뉴">
-            <div className="site-container desktop-nav__inner">
+            <div
+              className="site-container desktop-nav__inner"
+              onClick={(event) => {
+                if ((event.target as HTMLElement).closest('a')) setOpenDesktopGroup(null)
+              }}
+            >
               {navigationGroups.map((group) => {
                 const active = group.links.some((item) => item.href === pathname)
                 if (group.links.length === 1) {
@@ -98,8 +106,17 @@ export default function Navbar() {
                   return <NavLink key={group.label} {...item} currentPath={pathname} />
                 }
                 return (
-                  <details key={group.label} className="desktop-nav__group">
-                    <summary aria-current={active ? 'page' : undefined}>{group.label}</summary>
+                  <details key={group.label} className="desktop-nav__group" open={openDesktopGroup === group.label}>
+                    <summary
+                      aria-current={active ? 'page' : undefined}
+                      aria-expanded={openDesktopGroup === group.label}
+                      onClick={(event) => {
+                        event.preventDefault()
+                        setOpenDesktopGroup((current) => current === group.label ? null : group.label)
+                      }}
+                    >
+                      {group.label}
+                    </summary>
                     <div className="desktop-nav__popover">
                       {group.links.map((item) => <NavLink key={item.href} {...item} currentPath={pathname} />)}
                     </div>
