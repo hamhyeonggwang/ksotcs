@@ -12,7 +12,7 @@ type GuardState = 'loading' | 'not-admin' | 'admin'
 const NAV_ITEMS = [
   { href: '/admin', label: '대시보드 홈' },
   { href: '/admin/notices', label: '교육공문 관리' },
-  { href: '/admin/photos', label: '활동사진 관리' },
+  { href: '/admin/photos', label: '교육 포스터 관리' },
   { href: '/admin/popups', label: '팝업 관리' },
   { href: '/admin/schedules', label: '교육일정 관리' },
   { href: '/admin/posts', label: '공지 게시판 관리' },

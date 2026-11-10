@@ -7,7 +7,7 @@ export type NoticeRow = {
   created_at: string
 }
 
-export type ActivityPhotoRow = {
+export type EducationPosterRow = {
   id: string
   image_url: string
   caption: string | null

@@ -13,7 +13,7 @@ type SectionCard = {
 
 const SECTIONS: SectionCard[] = [
   { href: '/admin/notices', title: '교육공문 관리', description: '공문 PDF 등록·삭제 (학회소식 페이지에 표시)', table: 'notices' },
-  { href: '/admin/photos', title: '활동사진 관리', description: '학회 활동 사진 업로드·캡션 편집', table: 'activity_photos' },
+  { href: '/admin/photos', title: '교육 포스터 관리', description: '교육공지 포스터 업로드·캡션 편집', table: 'activity_photos' },
   { href: '/admin/popups', title: '팝업 관리', description: '홈 화면 팝업 공지의 내용·노출 기간·순서 설정', table: 'popups' },
   { href: '/admin/schedules', title: '교육일정 관리', description: '연간교육일정 등록·수정·노출 관리', table: 'education_schedules' },
   { href: '/admin/posts', title: '공지 게시판 관리', description: '일반 공지글 작성·게시 관리', table: 'posts' },

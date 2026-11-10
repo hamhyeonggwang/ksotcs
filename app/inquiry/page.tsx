@@ -11,18 +11,7 @@ export default function InquiryPage() {
       <div className="site-container">
         <PageIntro title="문의하기" description="학회에 대한 문의사항은 이메일로 보내주세요." />
 
-        <div className="two-column-doc">
-          <section className="content-block" aria-labelledby="chatbot-heading">
-            <h2 id="chatbot-heading">챗봇 상담</h2>
-            <div className="status-note" role="status">
-              <strong>준비중</strong>
-              <p>실시간으로 답변받을 수 있는 챗봇 상담 서비스를 준비하고 있습니다.</p>
-            </div>
-            <button className="secondary-action" type="button" disabled aria-disabled="true">
-              상담 준비중
-            </button>
-          </section>
-
+        <div className="inquiry-primary">
           <section className="content-block" aria-labelledby="email-heading">
             <h2 id="email-heading">이메일 문의</h2>
             <p>학회와 교육에 관한 문의 내용을 구체적으로 작성해 보내주세요.</p>

@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import Image from 'next/image'
 import { getSupabaseAuthClient } from '@/lib/supabaseAdminClient'
-import { errorMessage, type ActivityPhotoRow } from '@/lib/adminTypes'
+import { errorMessage, type EducationPosterRow } from '@/lib/adminTypes'
 import { uploadPublicFile, removePublicFileByUrl } from '@/lib/adminStorage'
 import FileDropzone from '@/components/admin/FileDropzone'
 import ConfirmDialog from '@/components/admin/ConfirmDialog'
@@ -15,7 +15,7 @@ export default function AdminPhotosPage() {
   const supabase = getSupabaseAuthClient()
   const { showToast } = useToast()
 
-  const [rows, setRows] = useState<ActivityPhotoRow[] | null>(null)
+  const [rows, setRows] = useState<EducationPosterRow[] | null>(null)
   const [loadError, setLoadError] = useState<string | null>(null)
 
   // 업로드 폼
@@ -27,7 +27,7 @@ export default function AdminPhotosPage() {
   const [editingCaption, setEditingCaption] = useState('')
 
   // 삭제 확인
-  const [deleteTarget, setDeleteTarget] = useState<ActivityPhotoRow | null>(null)
+  const [deleteTarget, setDeleteTarget] = useState<EducationPosterRow | null>(null)
   const [deleting, setDeleting] = useState(false)
 
   const load = useCallback(async () => {
@@ -42,7 +42,7 @@ export default function AdminPhotosPage() {
       setLoadError(error.message)
       return
     }
-    setRows((data ?? []) as ActivityPhotoRow[])
+    setRows((data ?? []) as EducationPosterRow[])
   }, [supabase])
 
   useEffect(() => {
@@ -59,7 +59,7 @@ export default function AdminPhotosPage() {
           .from('activity_photos')
           .insert({ image_url: imageUrl, caption: caption.trim() || null })
         if (error) throw error
-        showToast('success', '사진이 업로드되었습니다.')
+        showToast('success', '교육공지 포스터가 업로드되었습니다.')
         setCaption('')
         await load()
       } catch (e: unknown) {
@@ -93,7 +93,7 @@ export default function AdminPhotosPage() {
       const { error } = await supabase.from('activity_photos').delete().eq('id', deleteTarget.id)
       if (error) throw error
       await removePublicFileByUrl(supabase, BUCKET, deleteTarget.image_url).catch(() => undefined)
-      showToast('success', '사진이 삭제되었습니다.')
+      showToast('success', '교육공지 포스터가 삭제되었습니다.')
       setDeleteTarget(null)
       await load()
     } catch (e: unknown) {
@@ -106,13 +106,13 @@ export default function AdminPhotosPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-2xl md:text-3xl font-bold text-gray-900">활동사진 관리</h1>
-        <p className="mt-2 text-gray-600">업로드한 사진은 학회소식 페이지의 활동 사진 섹션에 표시됩니다.</p>
+        <h1 className="text-2xl md:text-3xl font-bold text-gray-900">교육공지 포스터 관리</h1>
+        <p className="mt-2 text-gray-600">업로드한 이미지는 학회소식 페이지의 교육공지 포스터 섹션에 표시됩니다.</p>
       </div>
 
       {/* 업로드 폼 */}
       <section className="rounded-2xl bg-white shadow-md ring-1 ring-black/5 p-6 space-y-4">
-        <h2 className="text-lg font-bold text-gray-900">새 사진 업로드</h2>
+        <h2 className="text-lg font-bold text-gray-900">새 포스터 업로드</h2>
         <div>
           <label htmlFor="photo-caption" className="block text-sm font-semibold text-gray-700 mb-1.5">
             캡션 (선택)
@@ -123,7 +123,7 @@ export default function AdminPhotosPage() {
             value={caption}
             onChange={(e) => setCaption(e.target.value)}
             className="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-gray-900 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-            placeholder="예: 2026 춘계학술대회 단체사진"
+            placeholder="예: 2026 아동발달평가사 교육 안내"
           />
         </div>
 
@@ -131,7 +131,7 @@ export default function AdminPhotosPage() {
           accept="image/*"
           allowedExtensions={['jpg', 'jpeg', 'png', 'webp', 'gif']}
           maxSizeMb={10}
-          label="사진을 끌어다 놓거나 클릭해서 선택 (선택 즉시 업로드됩니다)"
+          label="포스터를 끌어다 놓거나 클릭해서 선택 (선택 즉시 업로드됩니다)"
           uploading={uploading}
           onFileSelected={(f) => void upload(f)}
         />
@@ -140,7 +140,7 @@ export default function AdminPhotosPage() {
       {/* 목록 */}
       <section className="rounded-2xl bg-white shadow-md ring-1 ring-black/5 overflow-hidden">
         <div className="px-6 py-4 border-b border-gray-100 bg-gray-50/80 flex items-center justify-between">
-          <h2 className="text-lg font-bold text-gray-900">등록된 사진</h2>
+          <h2 className="text-lg font-bold text-gray-900">등록된 포스터</h2>
           <p className="text-sm text-gray-500">{rows ? `총 ${rows.length}장` : ''}</p>
         </div>
 
@@ -149,17 +149,17 @@ export default function AdminPhotosPage() {
         ) : rows === null ? (
           <p className="p-6 text-sm text-gray-500">불러오는 중...</p>
         ) : rows.length === 0 ? (
-          <p className="p-6 text-sm text-gray-500">등록된 사진이 없습니다.</p>
+          <p className="p-6 text-sm text-gray-500">등록된 교육공지 포스터가 없습니다.</p>
         ) : (
           <div className="p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {rows.map((p) => (
               <figure key={p.id} className="rounded-xl border border-gray-100 bg-gray-50 overflow-hidden shadow-sm">
-                <div className="relative aspect-[4/3] w-full bg-gray-200">
+                <div className="relative aspect-[4/5] w-full bg-gray-200">
                   <Image
                     src={p.image_url}
-                    alt={p.caption ?? '학회 활동 사진'}
+                    alt={p.caption ?? '교육공지 포스터'}
                     fill
-                    className="object-cover"
+                    className="object-contain"
                     sizes="(max-width: 768px) 100vw, 33vw"
                   />
                 </div>
@@ -227,8 +227,8 @@ export default function AdminPhotosPage() {
 
       <ConfirmDialog
         open={deleteTarget !== null}
-        title="사진을 삭제할까요?"
-        description="사진 파일과 캡션이 함께 삭제됩니다. 되돌릴 수 없습니다."
+        title="교육공지 포스터를 삭제할까요?"
+        description="포스터 이미지와 캡션이 함께 삭제됩니다. 되돌릴 수 없습니다."
         busy={deleting}
         onConfirm={remove}
         onCancel={() => setDeleteTarget(null)}

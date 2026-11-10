@@ -1,14 +1,13 @@
 import Link from 'next/link'
-import PageIntro from '@/components/PageIntro'
+import NoticeBoard, { type NoticeBoardItem } from '@/components/NoticeBoard'
 import { supabaseRestGetSafeResult } from '@/lib/supabaseRest'
-import type { PostRow } from '@/lib/adminTypes'
 
 export const metadata = {
   title: '공지사항 | 대한아동학교작업치료학회',
   description: '대한아동학교작업치료학회의 새로운 소식과 안내',
 }
 export default async function NoticesPage() {
-  const result = await supabaseRestGetSafeResult<PostRow[]>(
+  const result = await supabaseRestGetSafeResult<NoticeBoardItem[]>(
     '/rest/v1/posts?select=id,title,body,created_at&is_published=eq.true&order=created_at.desc&limit=100',
     [],
   )
@@ -17,24 +16,26 @@ export default async function NoticesPage() {
   return (
     <div className="public-page">
       <div className="site-container">
-        <PageIntro title="공지사항" description="학회의 새로운 소식과 안내를 확인하세요." />
+        <div className="notice-masthead">
+          <h1>공지사항</h1>
+          <div>
+            <p>학회 운영, 회원 안내와 주요 일정을 정확하게 확인하세요.</p>
+            <Link className="secondary-action" href="/inquiry">문의하기</Link>
+          </div>
+        </div>
 
         {!result.ok ? (
-          <div className="status-note" role="status">공지사항을 잠시 불러올 수 없습니다. 잠시 후 다시 시도해 주세요.</div>
+          <div className="notice-board__empty" role="status">
+            <strong>공지사항을 잠시 불러올 수 없습니다.</strong>
+            <p>잠시 후 다시 시도해 주세요.</p>
+          </div>
         ) : posts.length === 0 ? (
-          <div className="paper-panel">등록된 공지사항이 없습니다.</div>
+          <div className="notice-board__empty" role="status">
+            <strong>등록된 공지사항이 없습니다.</strong>
+            <p>새 공지가 등록되면 이곳에서 확인할 수 있습니다.</p>
+          </div>
         ) : (
-          <ul className="ruled-index" aria-label="공지사항 목록">
-            {posts.map((post) => (
-              <li key={post.id}>
-                <Link href={`/notices/${post.id}`} className="ruled-index__row">
-                  <strong>{post.title}</strong>
-                  <span>{post.body}</span>
-                  <time dateTime={post.created_at}>{new Date(post.created_at).toLocaleDateString('ko-KR')}</time>
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <NoticeBoard posts={posts} />
         )}
       </div>
     </div>
