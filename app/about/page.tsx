@@ -1,46 +1,37 @@
 'use client'
 
 import Link from 'next/link'
+import PageIntro from '@/components/PageIntro'
 
 export default function AboutPage() {
   return (
-    <div className="pt-32 pb-24 min-h-screen bg-gradient-to-b from-white to-primary-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
-            학회소개
-          </h1>
-          <div className="w-24 h-1 bg-gradient-to-r from-primary-600 to-primary-800 mx-auto mb-6"></div>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            대한아동학교작업치료학회에 대해 알아보세요
-          </p>
-          <div className="mt-6">
+    <div className="public-page long-document">
+      <div className="site-container">
+        <PageIntro
+          title="학회소개"
+          description="대한아동학교작업치료학회의 인사말, 조직과 연혁을 확인하세요."
+          action={
             <Link
               href="/statutes"
-              className="inline-flex items-center px-6 py-3 bg-primary-600 text-white rounded-lg font-semibold hover:bg-primary-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+              className="secondary-action"
             >
-              <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-              </svg>
               학회 정관 보기
             </Link>
-          </div>
-        </div>
+          }
+        />
 
-        {/* 배너용 슬로건 */}
-        <div className="bg-gradient-to-r from-primary-600 to-primary-800 rounded-3xl p-12 mb-16 text-center shadow-2xl">
-          <p className="text-3xl md:text-4xl font-bold text-white leading-relaxed">
+        <div className="about-slogan">
+          <p>
             아이곁에서, 현장 속에서<br />
             아동작업치료의 성장을 함께합니다
           </p>
         </div>
 
-        {/* 학회장 인사말 */}
-        <div className="bg-white rounded-3xl shadow-xl p-8 md:p-12 mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 pb-4 border-b-2 border-primary-200">
+        <div className="content-block">
+          <h2>
             학회장 인사말
           </h2>
-          <div className="prose prose-lg max-w-none text-gray-700 leading-relaxed space-y-4">
+          <div className="prose-public">
             <p>
               안녕하세요. 안녕하세요.
             </p>
@@ -67,13 +58,12 @@ export default function AboutPage() {
           </div>
         </div>
 
-        {/* 조직도 */}
-        <div className="bg-white rounded-3xl shadow-xl p-8 md:p-12 mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 pb-4 border-b-2 border-primary-200">
+        <div className="content-block">
+          <h2>
             조직도
           </h2>
-          <div className="overflow-x-auto">
-           <table className="w-full text-left border-collapse">
+          <div>
+           <table className="data-table responsive-table organization-table">
            <thead>
              <tr className="bg-primary-50">
              <th className="p-4">직책</th>
@@ -111,12 +101,11 @@ export default function AboutPage() {
           
         </div>
 
-        {/* 연혁 */}
-        <div className="bg-white rounded-3xl shadow-xl p-8 md:p-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 pb-4 border-b-2 border-primary-200">
+        <div className="content-block">
+          <h2>
             연혁
           </h2>
-          <div className="space-y-8">
+          <div className="timeline">
             {/* 2026년 */}
             <div className="border-l-4 border-primary-600 pl-6">
               <div className="text-3xl font-bold text-primary-600 mb-4">2026년</div>

@@ -1,148 +1,79 @@
 import Link from 'next/link'
+import SiteBrand from '@/components/SiteBrand'
+
+const footerGroups = [
+  {
+    title: '학회',
+    links: [
+      { label: '학회 소개', href: '/about' },
+      { label: '조직도와 연혁', href: '/about' },
+      { label: '학회 정관', href: '/statutes' },
+    ],
+  },
+  {
+    title: '연구와 소식',
+    links: [
+      { label: '학회지 안내', href: '/journal' },
+      { label: '학회소식', href: '/news' },
+      { label: '공지사항', href: '/notices' },
+    ],
+  },
+  {
+    title: '교육',
+    links: [
+      { label: '교육센터', href: 'http://ksotcs.co.kr' },
+      { label: '민간자격과정', href: '/certification' },
+      { label: '연간교육일정', href: '/education-schedule' },
+    ],
+  },
+]
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-900 text-gray-300">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid md:grid-cols-4 gap-8 mb-8">
-          {/* About */}
-          <div>
-            <h3 className="text-white font-bold text-lg mb-4">학회소개</h3>
-            <ul className="space-y-2">
-              <li>
-                <Link href="/about" className="hover:text-primary-400 transition-colors">
-                  학회 소개
-                </Link>
-              </li>
-              <li>
-                <Link href="/about" className="hover:text-primary-400 transition-colors">
-                  조직도
-                </Link>
-              </li>
-              <li>
-                <Link href="/about" className="hover:text-primary-400 transition-colors">
-                  연혁
-                </Link>
-              </li>
-              <li>
-                <Link href="/statutes" className="hover:text-primary-400 transition-colors">
-                  학회 정관
-                </Link>
-              </li>
-            </ul>
+    <footer className="site-footer">
+      <div className="site-container">
+        <div className="site-footer__main">
+          <div className="site-footer__brand">
+            <SiteBrand />
+            <p>
+              대전광역시 서구 관저동로90번길 47<br />
+              1106동 402호(관저동)
+            </p>
+            <p>
+              대표번호 010.7631.1778<br />
+              사업자등록번호 480-03-03349
+            </p>
+            <Link href="mailto:ksot4cs@gmail.com">ksot4cs@gmail.com</Link>
           </div>
 
-          {/* Services */}
-          <div>
-            <h3 className="text-white font-bold text-lg mb-4">서비스</h3>
-            <ul className="space-y-2">
-              <li>
-                <Link href="/journal" className="hover:text-primary-400 transition-colors">
-                  학회지 안내
-                </Link>
-              </li>
-              <li>
-                <Link href="/news" className="hover:text-primary-400 transition-colors">
-                  학회소식
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Education */}
-          <div>
-            <h3 className="text-white font-bold text-lg mb-4">교육</h3>
-            <ul className="space-y-2">
-              <li>
-                <Link
-                  href="http://ksotcs.co.kr"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-primary-400 transition-colors"
-                >
-                  교육센터
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/certification"
-                  className="hover:text-primary-400 transition-colors"
-                >
-                  민간자격과정 안내
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/education-schedule"
-                  className="hover:text-primary-400 transition-colors"
-                >
-                  연간교육일정
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="http://ksotcs.co.kr"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-primary-400 transition-colors"
-                >
-                  교육 프로그램
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="http://ksotcs.co.kr"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-primary-400 transition-colors"
-                >
-                  세미나
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Contact */}
-          <div>
-            <h3 className="text-white font-bold text-lg mb-4">연락처</h3>
-            <ul className="space-y-2 text-sm">
-              <li>대전광역시 서구 관저동로90번길 47</li>
-              <li>1106동 402호(관저동)</li>
-              <li>대표번호: 010.7631.1778</li>
-              <li>사업자등록번호: 480-03-03349</li>
-              <li>
-                <Link
-                  href="/inquiry"
-                  className="hover:text-primary-400 transition-colors"
-                >
-                  문의하기
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="mailto:ksot4cs@gmail.com"
-                  className="hover:text-primary-400 transition-colors"
-                >
-                  이메일: ksot4cs@gmail.com
-                </Link>
-              </li>
-            </ul>
+          <div className="site-footer__links">
+            {footerGroups.map((group) => (
+              <section key={group.title} aria-labelledby={`footer-${group.title}`}>
+                <h2 id={`footer-${group.title}`}>{group.title}</h2>
+                <ul>
+                  {group.links.map((link) => (
+                    <li key={`${group.title}-${link.label}`}>
+                      <Link
+                        href={link.href}
+                        target={link.href.startsWith('http') ? '_blank' : undefined}
+                        rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                      >
+                        {link.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            ))}
           </div>
         </div>
 
-        <div className="border-t border-gray-800 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-sm text-gray-400 mb-4 md:mb-0">
-              Copyright © 2015 대한아동학교작업치료학회. All right reserved.
-            </p>
-            <div className="flex space-x-6">
-              <Link href="/about" className="text-sm hover:text-primary-400 transition-colors">
-                이용안내
-              </Link>
-              <Link href="/about" className="text-sm hover:text-primary-400 transition-colors">
-                개인정보처리방침
-              </Link>
-            </div>
+        <div className="site-footer__legal">
+          <p>Copyright © 2015 대한아동학교작업치료학회. All right reserved.</p>
+          <div className="action-pair">
+            <Link href="/about">이용안내</Link>
+            <Link href="/about">개인정보처리방침</Link>
+            <Link href="/inquiry">문의하기</Link>
           </div>
         </div>
       </div>

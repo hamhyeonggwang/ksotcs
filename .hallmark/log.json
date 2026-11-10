@@ -1,0 +1,35 @@
+[
+ {
+  "mode": "redesign",
+  "depth": "full",
+  "scope": "site",
+  "shape": "Bento Grid",
+  "theme": "loom",
+  "axes": "light/geometric-sans/cool",
+  "posture": "committed",
+  "hero": "Ledge",
+  "nav": "ruled masthead",
+  "footer": "colophon block",
+  "imagery": "project therapy photographs and Supabase activity photographs",
+  "photos": [],
+  "entry": "app/page.tsx",
+  "fingerprint": "Bottom-aligned|Asymmetric spans|Hairline rule|Solid|Full-bleed|None",
+  "sections": [
+   "therapy hero",
+   "research and practice split",
+   "research news education bento",
+   "current society news",
+   "education membership close"
+  ],
+  "signature": "therapy room leading into the education index",
+  "waived": [
+   "44a"
+  ],
+  "answered": [
+   "F3"
+  ],
+  "reviews": "hero in-thread ship; finish in-thread ship",
+  "prompt": "Redesign the KSOTCS public website with Hallmark, focusing on design and using Pretendard.",
+  "date": "2026-11-10"
+ }
+]

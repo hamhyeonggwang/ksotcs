@@ -1,19 +1,18 @@
+import PageIntro from '@/components/PageIntro'
+
+export const metadata = {
+  title: '학회 정관 | 대한아동학교작업치료학회',
+  description: '대한아동·학교작업치료학회 정관',
+}
+
 export default function StatutesPage() {
   return (
-    <div className="pt-32 pb-24 min-h-screen bg-gradient-to-b from-white to-primary-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
-            학회 정관
-          </h1>
-          <div className="w-24 h-1 bg-gradient-to-r from-primary-600 to-primary-800 mx-auto mb-6"></div>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            대한아동·학교작업치료학회 정관
-          </p>
-        </div>
+    <div className="public-page long-document">
+      <div className="site-container">
+        <PageIntro title="학회 정관" description="대한아동·학교작업치료학회 정관" />
 
-        <div className="bg-white rounded-3xl shadow-xl p-8 md:p-12">
-          <div className="prose prose-lg max-w-none">
+        <div className="legal-document">
+          <div className="prose-public">
             {/* 제 1 장 총칙 */}
             <section className="mb-12">
               <h2 className="text-3xl font-bold text-gray-900 mb-6 pb-3 border-b-2 border-primary-200">

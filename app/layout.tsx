@@ -1,11 +1,14 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import localFont from 'next/font/local'
 import './globals.css'
-import Navbar from '@/components/Navbar'
-import Footer from '@/components/Footer'
-import HideOnAdmin from '@/components/HideOnAdmin'
+import PublicShell from '@/components/PublicShell'
 
-const inter = Inter({ subsets: ['latin'] })
+const pretendard = localFont({
+  src: './fonts/PretendardVariable.woff2',
+  display: 'swap',
+  weight: '45 920',
+  variable: '--font-pretendard',
+})
 
 export const metadata: Metadata = {
   title: '대한아동학교작업치료학회',
@@ -19,16 +22,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko">
-      <body className={inter.className}>
-        <HideOnAdmin>
-          <Navbar />
-        </HideOnAdmin>
-        <main className="min-h-screen">
-          {children}
-        </main>
-        <HideOnAdmin>
-          <Footer />
-        </HideOnAdmin>
+      <body className={pretendard.variable}>
+        <PublicShell>{children}</PublicShell>
       </body>
     </html>
   )

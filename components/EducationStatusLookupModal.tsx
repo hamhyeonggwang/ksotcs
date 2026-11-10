@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { getSupabase } from '@/lib/supabase'
 
 const statusMap: Record<string, string> = {
@@ -55,21 +55,6 @@ function normalizeName(input: string) {
   return input.replace(/\s+/g, ' ').trim()
 }
 
-function badgeClasses(status?: string) {
-  switch (status) {
-    case 'selected':
-    case 'completed':
-    case '선정':
-    case '완료':
-      return 'bg-emerald-50 text-emerald-700 ring-emerald-200'
-    case 'pending':
-    case '미입금':
-      return 'bg-amber-50 text-amber-800 ring-amber-200'
-    default:
-      return 'bg-sky-50 text-sky-700 ring-sky-200'
-  }
-}
-
 export default function EducationStatusLookupModal({
   open,
   onClose,
@@ -82,23 +67,18 @@ export default function EducationStatusLookupModal({
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [rows, setRows] = useState<LookupRow[] | null>(null)
+  const dialogRef = useRef<HTMLDialogElement>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
-    if (!open) return
-    const prev = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
-    return () => {
-      document.body.style.overflow = prev
+    const dialog = dialogRef.current
+    if (!dialog) return
+    if (open && !dialog.open) {
+      dialog.showModal()
+      requestAnimationFrame(() => inputRef.current?.focus())
+    } else if (!open && dialog.open) {
+      dialog.close()
     }
-  }, [open])
-
-  useEffect(() => {
-    if (!open) return
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose()
-    }
-    window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
   }, [open, onClose])
 
   useEffect(() => {
@@ -160,99 +140,89 @@ export default function EducationStatusLookupModal({
     }
   }, [name, supabase])
 
-  if (!open) return null
-
   return (
-    <div
-      className="fixed inset-0 z-[120] flex items-center justify-center p-4 sm:p-6"
-      role="dialog"
-      aria-modal="true"
+    <dialog
+      ref={dialogRef}
+      className="dialog-native"
       aria-labelledby="education-lookup-title"
+      onCancel={(event) => {
+        event.preventDefault()
+        onClose()
+      }}
+      onClose={onClose}
+      onClick={(event) => {
+        if (event.target === event.currentTarget) onClose()
+      }}
     >
-      <button
-        type="button"
-        className="absolute inset-0 bg-black/50 backdrop-blur-[2px]"
-        aria-label="팝업 닫기"
-        onClick={onClose}
-      />
-
-      <div className="relative w-full max-w-xl rounded-2xl bg-white shadow-2xl ring-1 ring-black/5 overflow-hidden">
-        <div className="bg-gradient-to-r from-primary-600 to-primary-800 px-6 py-5 text-white">
-          <p className="text-xs font-medium text-primary-100 uppercase tracking-wide">Education</p>
-          <h2 id="education-lookup-title" className="mt-1 text-xl sm:text-2xl font-bold">
+      <div className="dialog-panel">
+        <div className="dialog-panel__head">
+          <h2 id="education-lookup-title">
             최종 교육대상자 명단 확인
           </h2>
-          <p className="mt-2 text-sm text-primary-100">
+          <p>
             접수 진행중인 교육에 대해 본인 이름으로 상태를 확인할 수 있습니다.
           </p>
         </div>
 
-        <div className="p-6 sm:p-8 space-y-5">
-          <div className="space-y-2">
-            <label className="block text-sm font-semibold text-gray-800" htmlFor="education-lookup-name">
+        <div className="dialog-panel__body">
+          <div className="field">
+            <label htmlFor="education-lookup-name">
               이름
             </label>
-            <div className="flex flex-col sm:flex-row gap-3">
+            <div className="action-pair">
               <input
+                ref={inputRef}
                 id="education-lookup-name"
+                name="education-lookup-name"
+                autoComplete="name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') void submit()
                 }}
-                placeholder="예) 홍길동"
-                className="flex-1 rounded-xl border border-gray-200 px-4 py-3 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-200"
+                placeholder="이름"
+                aria-invalid={Boolean(error)}
+                aria-describedby="education-lookup-help"
               />
               <button
                 type="button"
                 onClick={() => void submit()}
                 disabled={submitting}
-                className="rounded-xl bg-primary-600 px-5 py-3 text-white font-semibold hover:bg-primary-700 disabled:opacity-60 disabled:cursor-not-allowed"
+                className="primary-action"
+                aria-busy={submitting}
               >
                 {submitting ? '조회 중…' : '조회'}
               </button>
             </div>
-            <p className="text-xs text-gray-500">
-              동일 이름이 있을 경우 결과가 여러 개 표시될 수 있습니다.
+            <p id="education-lookup-help" className="field-help" aria-live="polite">
+              {error ?? '동일 이름이 있을 경우 결과가 여러 개 표시될 수 있습니다.'}
             </p>
           </div>
 
-          {error && (
-            <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-              {error}
-            </div>
-          )}
-
           {rows && (
-            <div className="space-y-3">
+            <div className="lookup-results" aria-live="polite">
               {rows.length === 0 ? (
-                <div className="rounded-xl border border-gray-200 bg-gray-50 px-4 py-4 text-sm text-gray-700">
+                <div className="paper-panel">
                   입력한 이름으로 조회되는 접수 정보가 없습니다.
                 </div>
               ) : (
-                <ul className="space-y-3">
+                <ul className="ruled-index">
                   {rows.map((r) => {
                     const message = statusMap[r.status] ?? '상태를 확인해 주세요.'
                     const edu = educationLabel(r)
                     return (
-                      <li key={r.id} className="rounded-2xl border border-gray-200 bg-white px-5 py-4 shadow-sm">
-                        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
-                          <div className="min-w-0">
+                      <li key={r.id} className="lookup-result">
+                        <div>
+                          <div>
                             {edu ? (
-                              <p className="text-sm font-medium text-primary-700">교육명: {edu}</p>
+                              <p>교육명: {edu}</p>
                             ) : null}
-                            <p className="text-gray-900 font-semibold leading-snug">
+                            <p>
                               {r.name} 님<br />
                               {message}
                             </p>
                           </div>
-                          <span
-                            className={`shrink-0 inline-flex items-center rounded-full px-3 py-1 text-xs font-bold ring-1 ${badgeClasses(
-                              r.status,
-                            )}`}
-                          >
-                            {r.status}
-                          </span>
+                          <span>{r.status}</span>
                         </div>
                       </li>
                     )
@@ -263,17 +233,17 @@ export default function EducationStatusLookupModal({
           )}
         </div>
 
-        <div className="border-t border-gray-100 bg-gray-50 px-6 py-4 flex justify-end">
+        <div className="dialog-panel__foot">
           <button
             type="button"
             onClick={onClose}
-            className="rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm font-semibold text-gray-700 hover:bg-gray-50"
+            className="secondary-action"
           >
             닫기
           </button>
         </div>
       </div>
-    </div>
+    </dialog>
   )
 }
 

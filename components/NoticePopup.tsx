@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { popupFingerprint, type PopupItem } from '@/lib/popupWindow'
 
@@ -8,52 +8,42 @@ const STORAGE_VERSION = 'ksotcs-notice-popup-version'
 const STORAGE_HIDDEN_DAY = 'ksotcs-notice-popup-hidden-day'
 
 function todayLocalDate(): string {
-  const d = new Date()
-  const y = d.getFullYear()
-  const m = String(d.getMonth() + 1).padStart(2, '0')
-  const day = String(d.getDate()).padStart(2, '0')
-  return `${y}-${m}-${day}`
+  const date = new Date()
+  const year = date.getFullYear()
+  const month = String(date.getMonth() + 1).padStart(2, '0')
+  const day = String(date.getDate()).padStart(2, '0')
+  return `${year}-${month}-${day}`
 }
-
-/**
- * 랜딩 팝업. 항목은 관리자 대시보드(/admin/popups)에서 관리하며 서버에서 조회해 props로 전달됩니다.
- * '오늘 하루 안 보기' 버전은 항목 지문(id:updated_at)으로 자동 계산되어,
- * 팝업 내용이 바뀌면 숨김이 자동 해제됩니다.
- */
 export default function NoticePopup({ items }: { items: PopupItem[] }) {
   const [open, setOpen] = useState(false)
   const [index, setIndex] = useState(0)
-
+  const dialogRef = useRef<HTMLDialogElement>(null)
   const version = popupFingerprint(items)
+
+  const closeOnly = useCallback(() => setOpen(false), [])
 
   useEffect(() => {
     if (items.length === 0) return
     try {
-      const ver = localStorage.getItem(STORAGE_VERSION)
+      const savedVersion = localStorage.getItem(STORAGE_VERSION)
       const hiddenDay = localStorage.getItem(STORAGE_HIDDEN_DAY)
       const today = todayLocalDate()
 
-      if (ver !== version) {
+      if (savedVersion !== version) {
         setOpen(true)
         return
       }
-      if (hiddenDay === today) {
-        setOpen(false)
-        return
-      }
-      setOpen(true)
+      setOpen(hiddenDay !== today)
     } catch {
       setOpen(true)
     }
   }, [items.length, version])
 
   useEffect(() => {
-    if (!open) return
-    const prev = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
-    return () => {
-      document.body.style.overflow = prev
-    }
+    const dialog = dialogRef.current
+    if (!dialog) return
+    if (open && !dialog.open) dialog.showModal()
+    if (!open && dialog.open) dialog.close()
   }, [open])
 
   const hideForToday = useCallback(() => {
@@ -61,125 +51,80 @@ export default function NoticePopup({ items }: { items: PopupItem[] }) {
       localStorage.setItem(STORAGE_VERSION, version)
       localStorage.setItem(STORAGE_HIDDEN_DAY, todayLocalDate())
     } catch {
-      /* ignore */
+      // Storage may be unavailable in private browsing.
     }
     setOpen(false)
   }, [version])
 
-  const closeOnly = useCallback(() => {
-    setOpen(false)
-  }, [])
-
-  useEffect(() => {
-    if (!open) return
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') closeOnly()
-    }
-    window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
-  }, [open, closeOnly])
-
-  if (!open || items.length === 0) return null
+  if (items.length === 0) return null
 
   const total = items.length
   const current = items[Math.min(index, total - 1)]!
-
-  const goPrev = () => setIndex((i) => (i - 1 + total) % total)
-  const goNext = () => setIndex((i) => (i + 1) % total)
+  const goPrev = () => setIndex((value) => (value - 1 + total) % total)
+  const goNext = () => setIndex((value) => (value + 1) % total)
 
   return (
-    <div
-      className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6"
-      role="dialog"
-      aria-modal="true"
+    <dialog
+      ref={dialogRef}
+      className="dialog-native"
       aria-labelledby="notice-popup-title"
+      onCancel={(event) => {
+        event.preventDefault()
+        closeOnly()
+      }}
+      onClose={closeOnly}
+      onClick={(event) => {
+        if (event.target === event.currentTarget) closeOnly()
+      }}
     >
-      <button
-        type="button"
-        className="absolute inset-0 bg-black/45 backdrop-blur-[2px]"
-        aria-label="팝업 배경 닫기"
-        onClick={closeOnly}
-      />
-      <div className="relative w-full max-w-lg max-h-[85vh] flex flex-col rounded-2xl bg-white shadow-2xl ring-1 ring-black/5 overflow-hidden">
-        <div className="bg-gradient-to-r from-primary-600 to-primary-800 px-5 py-4 text-white shrink-0">
-          <p className="text-xs font-medium uppercase tracking-wide text-primary-100">POPUP ZONE</p>
-          <h2 id="notice-popup-title" className="text-lg font-bold mt-1">
-            공지
-          </h2>
+      <div className="dialog-panel">
+        <div className="dialog-panel__head">
+          <h2 id="notice-popup-title">공지</h2>
         </div>
 
-        <div className="flex-1 overflow-y-auto px-5 py-4">
-          {total > 1 && (
-            <div className="flex items-center justify-between gap-2 mb-3 text-sm text-gray-500">
-              <button
-                type="button"
-                onClick={goPrev}
-                className="rounded-lg px-2 py-1 hover:bg-primary-50 text-primary-700 font-medium"
-              >
-                이전
-              </button>
-              <span>
-                {index + 1} / {total}
-              </span>
-              <button
-                type="button"
-                onClick={goNext}
-                className="rounded-lg px-2 py-1 hover:bg-primary-50 text-primary-700 font-medium"
-              >
-                다음
-              </button>
+        <div className="dialog-panel__body notice-body">
+          {total > 1 ? (
+            <div className="notice-pagination" aria-label="공지 페이지 이동">
+              <button type="button" className="secondary-action" onClick={goPrev}>이전</button>
+              <span aria-live="polite">{index + 1} / {total}</span>
+              <button type="button" className="secondary-action" onClick={goNext}>다음</button>
             </div>
-          )}
+          ) : null}
 
-          <h3 className="text-base font-bold text-gray-900 leading-snug">{current.title}</h3>
-          <p className="mt-3 text-sm text-gray-700 whitespace-pre-wrap leading-relaxed">{current.body}</p>
+          <h3>{current.title}</h3>
+          <p className="notice-copy">{current.body}</p>
 
-          {current.link_href && (
-            <div className="mt-4">
-              <Link
-                href={current.link_href}
-                className="inline-flex text-sm font-semibold text-primary-700 hover:text-primary-800 underline underline-offset-2"
-                onClick={closeOnly}
-              >
-                {current.link_label ?? '자세히 보기'}
-              </Link>
+          {current.link_href ? (
+            <Link className="secondary-action" href={current.link_href} onClick={closeOnly}>
+              {current.link_label ?? '내용 확인'}
+            </Link>
+          ) : null}
+
+          {total > 1 ? (
+            <div className="notice-pages" aria-label="공지 선택">
+              {items.map((item, itemIndex) => (
+                <button
+                  key={item.id}
+                  type="button"
+                  aria-current={itemIndex === index ? 'page' : undefined}
+                  onClick={() => setIndex(itemIndex)}
+                >
+                  {itemIndex + 1}
+                </button>
+              ))}
             </div>
-          )}
+          ) : null}
         </div>
 
-        {total > 1 && (
-          <div className="flex justify-center gap-1.5 pb-3">
-            {items.map((item, i) => (
-              <button
-                key={item.id}
-                type="button"
-                onClick={() => setIndex(i)}
-                className={`h-2 rounded-full transition-all ${
-                  i === index ? 'w-6 bg-primary-600' : 'w-2 bg-gray-300 hover:bg-gray-400'
-                }`}
-                aria-label={`공지 ${i + 1}번`}
-              />
-            ))}
-          </div>
-        )}
-
-        <div className="flex flex-col sm:flex-row gap-2 border-t border-gray-100 p-4 bg-gray-50/90 shrink-0">
-          <button
-            type="button"
-            onClick={hideForToday}
-            className="flex-1 rounded-xl border border-gray-200 bg-white py-3 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-colors"
-          >
+        <div className="dialog-panel__foot">
+          <button type="button" className="secondary-action" onClick={hideForToday}>
             오늘 하루 열지 않기
           </button>
-          <button
-            type="button"
-            onClick={closeOnly}
-            className="flex-1 rounded-xl bg-primary-600 py-3 text-sm font-semibold text-white hover:bg-primary-700 transition-colors shadow-md"
-          >
+          <button type="button" className="primary-action" onClick={closeOnly}>
             닫기
           </button>
         </div>
       </div>
-    </div>
+    </dialog>
   )
 }

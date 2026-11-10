@@ -19,6 +19,25 @@ const config: Config = {
         'hero-kenburns': 'hero-kenburns 32s ease-in-out infinite alternate',
       },
       colors: {
+        paper: {
+          DEFAULT: 'var(--color-paper)',
+          2: 'var(--color-paper-2)',
+          3: 'var(--color-paper-3)',
+        },
+        ink: {
+          DEFAULT: 'var(--color-ink)',
+          2: 'var(--color-ink-2)',
+          muted: 'var(--color-muted)',
+        },
+        rule: {
+          DEFAULT: 'var(--color-rule)',
+          ink: 'var(--color-rule-ink)',
+        },
+        accent: {
+          DEFAULT: 'var(--color-accent)',
+          2: 'var(--color-accent-2)',
+          ink: 'var(--color-accent-ink)',
+        },
         primary: {
           50: '#f0f9ff',
           100: '#e0f2fe',
@@ -31,6 +50,11 @@ const config: Config = {
           800: '#075985',
           900: '#0c4a6e',
         },
+      },
+      fontFamily: {
+        pretendard: ['var(--font-pretendard)'],
+        display: ['var(--font-display)'],
+        body: ['var(--font-body)'],
       },
     },
   },
