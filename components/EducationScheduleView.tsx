@@ -40,7 +40,7 @@ export default function EducationScheduleView({ schedules }: { schedules: Educat
         <PageIntro title={`${year}년도 연간교육일정`} description="교육과정과 월을 선택해 일정을 확인하세요." />
 
         <section className="filter-panel" aria-label="교육 일정 필터">
-          <div className="filter-grid">
+          <div className="filter-grid schedule-filter-buttons">
             <div className="filter-group">
               <span id="category-filter-label">교육과정</span>
               <div className="filter-buttons" role="group" aria-labelledby="category-filter-label">
@@ -73,6 +73,20 @@ export default function EducationScheduleView({ schedules }: { schedules: Educat
               </div>
             </div>
           </div>
+          <div className="schedule-filter-selects">
+            <label>
+              <span>교육과정</span>
+              <select value={selectedCategory} onChange={(event) => setSelectedCategory(event.target.value)}>
+                {categories.map((category) => <option key={category} value={category}>{category}</option>)}
+              </select>
+            </label>
+            <label>
+              <span>월별</span>
+              <select value={selectedMonth} onChange={(event) => setSelectedMonth(event.target.value)}>
+                {months.map((month) => <option key={month} value={month}>{month}</option>)}
+              </select>
+            </label>
+          </div>
           <p className="filter-count" aria-live="polite">총 {filteredSchedules.length}개의 교육 일정이 있습니다.</p>
         </section>
 
@@ -82,8 +96,11 @@ export default function EducationScheduleView({ schedules }: { schedules: Educat
           <div className="schedule-list">
             {Array.from(groupedByMonth.keys()).sort((a, b) => a - b).map((month) => (
               <section key={month} className="schedule-month" aria-labelledby={`schedule-month-${month}`}>
-                <h2 id={`schedule-month-${month}`}>{month}월 교육 일정</h2>
-                <table className="data-table responsive-table">
+                <div className="schedule-month__head">
+                  <h2 id={`schedule-month-${month}`}><strong>{month}</strong><span>월 교육 일정</span></h2>
+                  <span>{(groupedByMonth.get(month) ?? []).length}건</span>
+                </div>
+                <table className="data-table schedule-desktop-table">
                   <thead>
                     <tr>
                       <th>교육시기</th>
@@ -116,6 +133,39 @@ export default function EducationScheduleView({ schedules }: { schedules: Educat
                     ))}
                   </tbody>
                 </table>
+                <ol className="schedule-overview">
+                  {(groupedByMonth.get(month) ?? []).map((schedule) => (
+                    <li key={schedule.id}>
+                      <article className="schedule-overview__item">
+                        <div className="schedule-overview__date">
+                          <span>교육시기</span>
+                          <strong>{schedule.period}</strong>
+                        </div>
+                        <div className="schedule-overview__content">
+                          <div className="schedule-overview__eyebrow">
+                            <span>{schedule.category}</span>
+                            <span>{schedule.method}</span>
+                          </div>
+                          <h3>
+                            <a
+                              href={EDUCATION_CENTER_SHOP_URL}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              aria-label={`${schedule.education_name}, 교육센터로 이동`}
+                            >
+                              {schedule.education_name}
+                            </a>
+                          </h3>
+                          <p className="schedule-overview__course">{schedule.course_name}</p>
+                          <dl className="schedule-overview__facts">
+                            <div><dt>시간</dt><dd>{schedule.education_time}</dd></div>
+                            <div><dt>대상</dt><dd>{schedule.target}</dd></div>
+                          </dl>
+                        </div>
+                      </article>
+                    </li>
+                  ))}
+                </ol>
               </section>
             ))}
           </div>
