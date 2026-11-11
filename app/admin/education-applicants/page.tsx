@@ -54,6 +54,7 @@ export default function AdminEducationApplicantsPage() {
   const [loadError, setLoadError] = useState<string | null>(null)
   const [filterEducation, setFilterEducation] = useState('전체')
   const [filterStatus, setFilterStatus] = useState('전체')
+  const [filterCurrent, setFilterCurrent] = useState('전체')
   const [searchName, setSearchName] = useState('')
 
   const [deleteTarget, setDeleteTarget] = useState<EducationApplicantRow | null>(null)
@@ -62,6 +63,8 @@ export default function AdminEducationApplicantsPage() {
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set())
   const [bulkStatus, setBulkStatus] = useState(DEFAULT_STATUS)
   const [bulkApplying, setBulkApplying] = useState(false)
+  const [bulkDeleteOpen, setBulkDeleteOpen] = useState(false)
+  const [bulkDeleting, setBulkDeleting] = useState(false)
 
   const load = useCallback(async () => {
     if (!supabase) return
@@ -303,10 +306,16 @@ export default function AdminEducationApplicantsPage() {
     return rows.filter((r) => {
       if (filterEducation !== '전체' && r.education_name !== filterEducation) return false
       if (filterStatus !== '전체' && r.status !== filterStatus) return false
+      if (filterCurrent === '현재' && !r.is_current) return false
+      if (filterCurrent === '종료' && r.is_current) return false
       if (q && !r.name.toLowerCase().includes(q)) return false
       return true
     })
-  }, [rows, filterEducation, filterStatus, searchName])
+  }, [rows, filterEducation, filterStatus, filterCurrent, searchName])
+
+  useEffect(() => {
+    setSelectedIds(new Set())
+  }, [filterEducation, filterStatus, filterCurrent, searchName])
 
   const toggleSelectOne = useCallback((id: string) => {
     setSelectedIds((prev) => {
@@ -354,6 +363,38 @@ export default function AdminEducationApplicantsPage() {
     }
   }, [supabase, selectedIds, bulkStatus, showToast, load])
 
+  const removeSelected = useCallback(async () => {
+    if (!supabase || selectedIds.size === 0) return
+    const ids = Array.from(selectedIds)
+    let deletedCount = 0
+    setBulkDeleting(true)
+    try {
+      await runInChunks(ids, INSERT_CHUNK_SIZE, async (chunk) => {
+        const { data, error } = await supabase
+          .from('education_applicants')
+          .delete()
+          .in('id', chunk)
+          .select('id')
+        if (error) throw error
+        deletedCount += data?.length ?? 0
+      })
+
+      if (deletedCount !== ids.length) {
+        showToast('error', `${ids.length}건 중 ${deletedCount}건만 삭제되었습니다. 권한과 명단 상태를 확인해 주세요.`)
+      } else {
+        showToast('success', `${deletedCount}건을 명단에서 삭제했습니다.`)
+      }
+      setSelectedIds(new Set())
+      setBulkDeleteOpen(false)
+      await load()
+    } catch (e: unknown) {
+      showToast('error', errorMessage(e, '선택 항목 삭제 중 오류가 발생했습니다.'))
+      await load()
+    } finally {
+      setBulkDeleting(false)
+    }
+  }, [supabase, selectedIds, showToast, load])
+
   return (
     <div className="space-y-8">
       <div>
@@ -365,7 +406,24 @@ export default function AdminEducationApplicantsPage() {
 
       {/* CSV 업로드 */}
       <section className="rounded-2xl bg-white shadow-md ring-1 ring-primary-100 p-6 space-y-5">
-        <h2 className="text-lg font-bold text-gray-900">명단 업로드</h2>
+        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
+          <div>
+            <h2 className="text-lg font-bold text-gray-900">명단 업로드</h2>
+            <p className="mt-1 text-sm text-gray-600">첫 줄에 <strong>이름,이메일</strong> 헤더를 입력합니다. 이메일은 비워도 됩니다.</p>
+          </div>
+          <a
+            href="/examples/education-applicants-sample.csv"
+            download
+            className="inline-flex min-h-10 items-center justify-center rounded-xl border border-primary-200 px-4 py-2 text-sm font-semibold text-primary-700 hover:bg-primary-50"
+          >
+            CSV 양식 예시 다운로드
+          </a>
+        </div>
+
+        <div className="rounded-xl border border-gray-200 bg-gray-50 px-4 py-3">
+          <p className="text-xs font-semibold text-gray-500">CSV 작성 예시</p>
+          <pre className="mt-2 overflow-x-auto text-sm leading-6 text-gray-700">{`이름,이메일\n홍길동,hong@example.com\n김하늘,`}</pre>
+        </div>
 
         <div className="grid sm:grid-cols-3 gap-4">
           <div className="sm:col-span-2">
@@ -541,6 +599,16 @@ export default function AdminEducationApplicantsPage() {
               </option>
             ))}
           </select>
+          <select
+            value={filterCurrent}
+            onChange={(e) => setFilterCurrent(e.target.value)}
+            className="rounded-lg border border-gray-300 px-3 py-1.5 text-sm"
+            aria-label="교육 진행 상태"
+          >
+            <option value="전체">전체 교육 상태</option>
+            <option value="현재">현재 조회 중</option>
+            <option value="종료">종료된 교육</option>
+          </select>
           <input
             type="text"
             value={searchName}
@@ -580,15 +648,23 @@ export default function AdminEducationApplicantsPage() {
                 <button
                   type="button"
                   onClick={() => void applyBulkStatus()}
-                  disabled={bulkApplying}
+                  disabled={bulkApplying || bulkDeleting}
                   className="rounded-lg bg-primary-600 px-3 py-1.5 text-sm font-semibold text-white hover:bg-primary-700 disabled:opacity-60"
                 >
                   {bulkApplying ? '변경 중...' : '선택 항목 상태 일괄 변경'}
                 </button>
                 <button
                   type="button"
+                  onClick={() => setBulkDeleteOpen(true)}
+                  disabled={bulkApplying || bulkDeleting}
+                  className="rounded-lg border border-red-200 px-3 py-1.5 text-sm font-semibold text-red-600 hover:bg-red-50 disabled:opacity-60"
+                >
+                  선택 항목 삭제
+                </button>
+                <button
+                  type="button"
                   onClick={() => setSelectedIds(new Set())}
-                  disabled={bulkApplying}
+                  disabled={bulkApplying || bulkDeleting}
                   className="rounded-lg border border-gray-200 px-3 py-1.5 text-sm font-semibold text-gray-600 hover:bg-gray-50 disabled:opacity-60"
                 >
                   선택 해제
@@ -621,7 +697,7 @@ export default function AdminEducationApplicantsPage() {
                     {row.email && <span className="text-sm text-gray-500">{row.email}</span>}
                     {!row.is_current && (
                       <span className="rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-semibold text-gray-500">
-                        현재 조회 대상 아님
+                        종료된 교육
                       </span>
                     )}
                   </div>
@@ -649,7 +725,7 @@ export default function AdminEducationApplicantsPage() {
                         : 'border-green-200 text-green-700 hover:bg-green-50'
                     }`}
                   >
-                    {row.is_current ? '현재 조회 제외' : '현재 조회로 설정'}
+                    {row.is_current ? '교육 종료 처리' : '다시 조회 허용'}
                   </button>
                   <button
                     type="button"
@@ -672,6 +748,15 @@ export default function AdminEducationApplicantsPage() {
         busy={deleting}
         onConfirm={remove}
         onCancel={() => setDeleteTarget(null)}
+      />
+      <ConfirmDialog
+        open={bulkDeleteOpen}
+        title={`선택한 ${selectedIds.size}건을 삭제할까요?`}
+        description="삭제한 교육대상자 명단은 복구할 수 없습니다. 종료된 교육인지 다시 확인해 주세요."
+        confirmLabel="선택 항목 삭제"
+        busy={bulkDeleting}
+        onConfirm={() => void removeSelected()}
+        onCancel={() => setBulkDeleteOpen(false)}
       />
     </div>
   )
