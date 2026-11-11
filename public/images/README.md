@@ -1,6 +1,6 @@
 # KSOTCS 공개 사이트 이미지 교체 안내
 
-현재 홈 히어로 첫 화면에는 전달받은 공원 사진을 사용하고, 두 번째 화면은 프로젝트에 있던 사진을 임시로 사용합니다. 공식 로고와 두 번째 히어로 원본을 받으면 아래 이름으로 추가하고 `components/SiteBrand.tsx`, `components/Hero.tsx`의 슬롯 경로를 교체합니다.
+현재 홈 히어로 두 화면에는 전달받은 사진을 사용합니다. 공식 로고를 받으면 아래 이름으로 추가하고 `components/SiteBrand.tsx`의 슬롯 경로를 교체합니다.
 
 ## 공식 로고
 
@@ -18,9 +18,9 @@
 - JPG 또는 WebP 권장, 파일당 500KB 전후로 최적화
 - 모바일 이미지는 데스크탑 원본을 단순 축소하지 않고 인물이 세로 화면 안에 들어오도록 별도 크롭
 
-## 현재 연결된 임시 사진
+## 현재 연결된 사진
 
 - 첫 화면: `hero-children-park.jpg`
-- 두 번째 화면: `feature-research-practice.png`
+- 두 번째 화면: `hero-school-blocks.jpg`
 
 교육공지 포스터는 정적 파일이 아니라 Supabase `activity_photos` 테이블과 스토리지에서 불러옵니다.

@@ -585,7 +585,7 @@
 
   .home-hero { height: 31rem; min-height: 31rem; }
   .hero-slide picture img { object-position: 62% center; }
-  .hero-slide--second picture img { object-position: 48% center; }
+  .hero-slide--second picture img { object-position: 72% center; }
   .hero-slide__scrim { background: linear-gradient(0deg, var(--color-hero-scrim) 0%, var(--color-hero-scrim-soft) 70%, var(--color-transparent) 100%); }
   .hero-slide__content { justify-content: flex-end; align-items: center; padding-bottom: var(--space-3xl); text-align: center; }
   .hero-slide h1 { max-width: 12ch; font-size: clamp(2.3rem, 10vw, 4rem); }
