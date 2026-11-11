@@ -12,8 +12,8 @@ const pretendard = localFont({
 })
 
 export const metadata: Metadata = {
-  title: '대한아동학교작업치료학회',
-  description: '대한아동학교작업치료학회 공식 홈페이지',
+  title: '대한아동·학교작업치료학회',
+  description: '대한아동·학교작업치료학회 공식 홈페이지',
 }
 
 export default function RootLayout({

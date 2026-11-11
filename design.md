@@ -1,4 +1,4 @@
-# Design: KSOTCS 대한아동학교작업치료학회
+# Design: KSOTCS 대한아동·학교작업치료학회
 
 공개 사이트의 잠금 디자인 시스템. `www.childedu.or.kr/user/index.asp`의 명확한 기관형 정보 구조와 사용자 제공 모바일 레퍼런스를 KSOTCS 콘텐츠에 맞게 재구성한다.
 

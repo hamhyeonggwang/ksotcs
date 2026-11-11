@@ -1,7 +1,7 @@
 import Link from 'next/link'
 
 const siteBrand = {
-  name: '대한아동학교작업치료학회',
+  name: '대한아동·학교작업치료학회',
   englishName: 'Korean Society for Occupational Therapy in Child and School',
   logoSrc: null as string | null,
 }

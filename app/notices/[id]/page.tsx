@@ -4,7 +4,7 @@ import { supabaseRestGetSafe } from '@/lib/supabaseRest'
 import type { PostRow } from '@/lib/adminTypes'
 
 export const metadata = {
-  title: '공지사항 | 대한아동학교작업치료학회',
+  title: '공지사항 | 대한아동·학교작업치료학회',
 }
 export default async function NoticeDetailPage({ params }: { params: { id: string } }) {
   if (!/^[0-9a-f-]{36}$/i.test(params.id)) notFound()
@@ -37,7 +37,7 @@ export default async function NoticeDetailPage({ params }: { params: { id: strin
         <header className="notice-detail__head">
           <h1>{post.title}</h1>
           <div className="notice-detail__meta">
-            <span>대한아동학교작업치료학회</span>
+            <span>대한아동·학교작업치료학회</span>
             <time dateTime={post.created_at}>
               {new Date(post.created_at).toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' })}
             </time>

@@ -34,7 +34,7 @@ export default function Footer() {
         </div>
       </div>
       <div className="site-container site-footer__legal">
-        <p>Copyright © 2015 대한아동학교작업치료학회.</p>
+        <p>Copyright © 2015 대한아동·학교작업치료학회.</p>
         <div><Link href="/about">이용안내</Link><Link href="/about">개인정보처리방침</Link></div>
       </div>
     </footer>

@@ -19,7 +19,7 @@ const accordionItems: AccordionItem[] = [
         {/* 제목 */}
         <div>
           <h3 className="text-2xl md:text-3xl font-bold text-primary-700">
-            대한아동학교 작업치료학회는 아래와 같이 논문을 상시 모집합니다.
+            대한아동·학교작업치료학회는 아래와 같이 논문을 상시 모집합니다.
           </h3>
         </div>
 
@@ -88,14 +88,14 @@ const accordionItems: AccordionItem[] = [
         <div>
           <h3 className="text-2xl md:text-3xl font-bold text-primary-700">논문투고규정</h3>
           <p className="mt-3 text-gray-700">
-            대한아동학교작업치료학회지는 아동, 청소년 및 학교작업치료와 관련된 분야의 논문을 게재함을 목적으로 한다.
+            대한아동·학교작업치료학회지는 아동, 청소년 및 학교작업치료와 관련된 분야의 논문을 게재함을 목적으로 한다.
           </p>
         </div>
 
         <div>
           <h4 className="text-xl font-bold text-primary-600 mb-2">1. 투고 자격</h4>
           <div className="border-t pt-3 text-gray-700">
-            <p>본 학회지에 투고할 수 있는 자는 대한아동학교작업치료학회의 회원으로 한다.</p>
+            <p>본 학회지에 투고할 수 있는 자는 대한아동·학교작업치료학회의 회원으로 한다.</p>
           </div>
         </div>
 
@@ -171,7 +171,7 @@ const accordionItems: AccordionItem[] = [
         <div>
           <h3 className="text-2xl md:text-3xl font-bold text-primary-700">연구윤리규정</h3>
           <p className="mt-3 text-gray-700">
-            대한아동학교 작업치료학회는 연구윤리를 확립하고 연구부정행위를 방지하기 위하여 다음과 같은 연구윤리규정을 둔다.
+            대한아동·학교작업치료학회는 연구윤리를 확립하고 연구부정행위를 방지하기 위하여 다음과 같은 연구윤리규정을 둔다.
           </p>
         </div>
 

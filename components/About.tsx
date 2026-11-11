@@ -37,7 +37,7 @@ export default function About() {
           <div>
             <h2 id="about-heading">연구와 실천을 잇습니다</h2>
             <p className="lead">
-              대한아동학교작업치료학회는 아동과 학교 환경의 연구와 실천을 연결합니다.
+              대한아동·학교작업치료학회는 아동과 학교 환경의 연구와 실천을 연결합니다.
             </p>
           </div>
 

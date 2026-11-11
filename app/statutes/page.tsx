@@ -1,7 +1,7 @@
 import PageIntro from '@/components/PageIntro'
 
 export const metadata = {
-  title: '학회 정관 | 대한아동학교작업치료학회',
+  title: '학회 정관 | 대한아동·학교작업치료학회',
   description: '대한아동·학교작업치료학회 정관',
 }
 

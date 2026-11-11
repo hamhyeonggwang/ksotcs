@@ -2,8 +2,8 @@ import Link from 'next/link'
 import PageIntro from '@/components/PageIntro'
 
 export const metadata = {
-  title: '문의 | 대한아동학교작업치료학회',
-  description: '대한아동학교작업치료학회 문의 안내',
+  title: '문의 | 대한아동·학교작업치료학회',
+  description: '대한아동·학교작업치료학회 문의 안내',
 }
 export default function InquiryPage() {
   return (

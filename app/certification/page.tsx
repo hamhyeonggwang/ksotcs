@@ -1,8 +1,8 @@
 import PageIntro from '@/components/PageIntro'
 
 export const metadata = {
-  title: '민간자격과정 안내 | 대한아동학교작업치료학회',
-  description: '대한아동학교작업치료학회의 민간자격과정 안내',
+  title: '민간자격과정 안내 | 대한아동·학교작업치료학회',
+  description: '대한아동·학교작업치료학회의 민간자격과정 안내',
 }
 export default function CertificationPage() {
   return (

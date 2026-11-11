@@ -9,7 +9,7 @@ export default function AboutPage() {
       <div className="site-container">
         <PageIntro
           title="학회소개"
-          description="대한아동학교작업치료학회의 인사말, 조직과 연혁을 확인하세요."
+          description="대한아동·학교작업치료학회의 인사말, 조직과 연혁을 확인하세요."
           action={
             <Link
               href="/statutes"
@@ -36,7 +36,7 @@ export default function AboutPage() {
               안녕하세요. 안녕하세요.
             </p>
             <p>
-              대한아동학교 작업치료학회장입니다.
+              대한아동·학교작업치료학회장입니다.
             </p>
             <p>
               아이들과 함께하는 시간을 소중히 여기며, 아동작업치료 분야에서 작은 변화와 성장을 만들어가고 있습니다. 

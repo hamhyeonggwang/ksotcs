@@ -3,8 +3,8 @@ import NoticeBoard, { type NoticeBoardItem } from '@/components/NoticeBoard'
 import { supabaseRestGetSafeResult } from '@/lib/supabaseRest'
 
 export const metadata = {
-  title: '공지사항 | 대한아동학교작업치료학회',
-  description: '대한아동학교작업치료학회의 새로운 소식과 안내',
+  title: '공지사항 | 대한아동·학교작업치료학회',
+  description: '대한아동·학교작업치료학회의 새로운 소식과 안내',
 }
 export default async function NoticesPage() {
   const result = await supabaseRestGetSafeResult<NoticeBoardItem[]>(

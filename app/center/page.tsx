@@ -1,8 +1,8 @@
 import PageIntro from '@/components/PageIntro'
 
 export const metadata = {
-  title: '교육센터 | 대한아동학교작업치료학회',
-  description: '대한아동학교작업치료학회 교육센터 안내',
+  title: '교육센터 | 대한아동·학교작업치료학회',
+  description: '대한아동·학교작업치료학회 교육센터 안내',
 }
 export default function CenterPage() {
   return (

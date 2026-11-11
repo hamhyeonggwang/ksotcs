@@ -7,8 +7,8 @@ type NoticeRow = { id: string; title: string; pdf_url: string }
 type EducationPosterRow = { id: string; image_url: string; caption: string | null; created_at: string }
 
 export const metadata = {
-  title: '학회소식 | 대한아동학교작업치료학회',
-  description: '대한아동학교작업치료학회 교육공문과 교육공지 포스터',
+  title: '학회소식 | 대한아동·학교작업치료학회',
+  description: '대한아동·학교작업치료학회 교육공문과 교육공지 포스터',
 }
 export default function NewsPage() {
   const cfg = getSupabaseRestConfig()
