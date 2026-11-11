@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { getSupabaseAuthClient } from '@/lib/supabaseAdminClient'
 import { errorMessage, APPLICANT_STATUS_OPTIONS, type EducationApplicantRow } from '@/lib/adminTypes'
-import { parseApplicantsCsv, type ParsedApplicantRow } from '@/lib/csv'
+import { parseApplicantsCsvBuffer, type ParsedApplicantRow } from '@/lib/csv'
 import FileDropzone from '@/components/admin/FileDropzone'
 import ConfirmDialog from '@/components/admin/ConfirmDialog'
 import { useToast } from '@/components/admin/Toast'
@@ -49,6 +49,10 @@ export default function AdminEducationApplicantsPage() {
   const [parsing, setParsing] = useState(false)
   const [parseError, setParseError] = useState<string | null>(null)
   const [registering, setRegistering] = useState(false)
+  const [manualName, setManualName] = useState('')
+  const [manualEmail, setManualEmail] = useState('')
+  const [manualStatus, setManualStatus] = useState(DEFAULT_STATUS)
+  const [manualRegistering, setManualRegistering] = useState(false)
 
   const [rows, setRows] = useState<EducationApplicantRow[] | null>(null)
   const [loadError, setLoadError] = useState<string | null>(null)
@@ -126,8 +130,8 @@ export default function AdminEducationApplicantsPage() {
 
       setParsing(true)
       try {
-        const text = await file.text()
-        const { rows: parsed, skipped: skippedRows } = parseApplicantsCsv(text)
+        const buffer = await file.arrayBuffer()
+        const { rows: parsed, skipped: skippedRows } = parseApplicantsCsvBuffer(buffer)
         setSkipped(skippedRows)
 
         if (parsed.length === 0) {
@@ -241,6 +245,65 @@ export default function AdminEducationApplicantsPage() {
       setRegistering(false)
     }
   }, [supabase, preview, educationName, markCurrent, showToast, load])
+
+  const registerManual = useCallback(async () => {
+    const eduName = educationName.trim()
+    const name = manualName.trim()
+    const email = manualEmail.trim()
+
+    if (!eduName) {
+      showToast('error', '교육명을 먼저 입력해 주세요.')
+      return
+    }
+    if (!name) {
+      showToast('error', '이름을 입력해 주세요.')
+      return
+    }
+    if (!supabase) {
+      showToast('error', 'Supabase 설정이 필요합니다.')
+      return
+    }
+
+    setManualRegistering(true)
+    try {
+      const { data: existingRows, error: findError } = await supabase
+        .from('education_applicants')
+        .select('id,name,email')
+        .eq('education_name', eduName)
+      if (findError) throw findError
+
+      const existing = ((existingRows ?? []) as Pick<EducationApplicantRow, 'id' | 'name' | 'email'>[]).find((row) =>
+        email ? normalize(row.email ?? '') === normalize(email) : normalize(row.name) === normalize(name),
+      )
+
+      if (existing) {
+        const { error } = await supabase
+          .from('education_applicants')
+          .update({ name, email: email || null, status: manualStatus, is_current: markCurrent })
+          .eq('id', existing.id)
+        if (error) throw error
+        showToast('success', `${name}님의 기존 명단을 갱신했습니다.`)
+      } else {
+        const { error } = await supabase.from('education_applicants').insert({
+          name,
+          email: email || null,
+          education_name: eduName,
+          status: manualStatus,
+          is_current: markCurrent,
+        })
+        if (error) throw error
+        showToast('success', `${name}님을 명단에 등록했습니다.`)
+      }
+
+      setManualName('')
+      setManualEmail('')
+      await load()
+    } catch (e: unknown) {
+      showToast('error', errorMessage(e, '개별 명단 등록 중 오류가 발생했습니다.'))
+    } finally {
+      setManualRegistering(false)
+    }
+  }, [educationName, manualName, manualEmail, manualStatus, markCurrent, supabase, showToast, load])
 
   const updateStatus = useCallback(
     async (row: EducationApplicantRow, status: string) => {
@@ -423,12 +486,13 @@ export default function AdminEducationApplicantsPage() {
         <div className="rounded-xl border border-gray-200 bg-gray-50 px-4 py-3">
           <p className="text-xs font-semibold text-gray-500">CSV 작성 예시</p>
           <pre className="mt-2 overflow-x-auto text-sm leading-6 text-gray-700">{`이름,이메일\n홍길동,hong@example.com\n김하늘,`}</pre>
+          <p className="mt-2 text-xs text-gray-500">업로드 순서: 교육명 입력 → CSV 선택 또는 끌어놓기 → 미리보기 확인 → 명단 등록</p>
         </div>
 
         <div className="grid sm:grid-cols-3 gap-4">
           <div className="sm:col-span-2">
             <label htmlFor="app-edu-name" className="block text-sm font-semibold text-gray-700 mb-1.5">
-              교육명
+              교육명 <span className="text-red-500">(필수)</span>
             </label>
             <input
               id="app-edu-name"
@@ -438,6 +502,7 @@ export default function AdminEducationApplicantsPage() {
               className={inputClass}
               placeholder="예: 아동발달평가서 작성"
               list="app-edu-name-list"
+              required
             />
             <datalist id="app-edu-name-list">
               {educationOptions.map((n) => (
@@ -480,7 +545,6 @@ export default function AdminEducationApplicantsPage() {
           maxSizeMb={5}
           label="CSV 파일을 끌어다 놓거나 클릭해서 선택 (이름, 이메일 컬럼)"
           uploading={parsing}
-          disabled={!educationName.trim()}
           onFileSelected={(file) => void handleFile(file)}
         />
 
@@ -569,6 +633,74 @@ export default function AdminEducationApplicantsPage() {
             </div>
           </div>
         )}
+
+        <div className="border-t border-gray-200 pt-5">
+          <div>
+            <h3 className="text-base font-bold text-gray-900">개별 명단 수기 등록</h3>
+            <p className="mt-1 text-sm text-gray-600">
+              위 교육명과 현재 교육 여부를 적용합니다. 같은 교육에서 이메일이 같으면 기존 명단을 갱신합니다.
+            </p>
+          </div>
+          <form
+            className="mt-4 grid gap-4 md:grid-cols-[1fr_1.4fr_1.2fr_auto] md:items-end"
+            onSubmit={(event) => {
+              event.preventDefault()
+              void registerManual()
+            }}
+          >
+            <div>
+              <label htmlFor="manual-applicant-name" className="block text-sm font-semibold text-gray-700 mb-1.5">
+                이름 <span className="text-red-500">(필수)</span>
+              </label>
+              <input
+                id="manual-applicant-name"
+                type="text"
+                value={manualName}
+                onChange={(event) => setManualName(event.target.value)}
+                className={inputClass}
+                placeholder="예: 홍길동"
+                required
+              />
+            </div>
+            <div>
+              <label htmlFor="manual-applicant-email" className="block text-sm font-semibold text-gray-700 mb-1.5">
+                이메일 (선택)
+              </label>
+              <input
+                id="manual-applicant-email"
+                type="email"
+                value={manualEmail}
+                onChange={(event) => setManualEmail(event.target.value)}
+                className={inputClass}
+                placeholder="hong@example.com"
+              />
+            </div>
+            <div>
+              <label htmlFor="manual-applicant-status" className="block text-sm font-semibold text-gray-700 mb-1.5">
+                상태
+              </label>
+              <select
+                id="manual-applicant-status"
+                value={manualStatus}
+                onChange={(event) => setManualStatus(event.target.value)}
+                className={inputClass}
+              >
+                {APPLICANT_STATUS_OPTIONS.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <button
+              type="submit"
+              disabled={manualRegistering}
+              className="min-h-11 rounded-xl bg-primary-600 px-5 py-2.5 text-sm font-semibold text-white shadow-md transition-colors hover:bg-primary-700 disabled:opacity-60"
+            >
+              {manualRegistering ? '등록 중...' : '개별 등록'}
+            </button>
+          </form>
+        </div>
       </section>
 
       {/* 등록된 명단 */}
