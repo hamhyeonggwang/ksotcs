@@ -6,9 +6,11 @@ import EducationStatusLookupModal from '@/components/EducationStatusLookupModal'
 
 const slides = [
   {
-    desktopSrc: '/images/hero-landing.png',
-    mobileSrc: '/images/hero-landing.png',
-    alt: '밝은 치료실에서 작업치료사와 아동이 균형 활동을 하는 모습',
+    desktopSrc: '/images/hero-children-park.jpg',
+    mobileSrc: '/images/hero-children-park.jpg',
+    width: 1280,
+    height: 959,
+    alt: '도시 공원의 잔디밭을 달리는 두 아이의 뒷모습',
     title: '아동과 학교를 위한 작업치료',
     description: '연구와 교육으로 현장의 전문성을 함께 높입니다.',
     position: 'hero-slide--first',
@@ -16,6 +18,8 @@ const slides = [
   {
     desktopSrc: '/images/feature-research-practice.png',
     mobileSrc: '/images/feature-research-practice.png',
+    width: 1024,
+    height: 571,
     alt: '작업치료사와 아동이 블록 활동을 함께하는 모습',
     title: '연구와 교육을 현장으로',
     description: '아동 작업치료의 지식과 실천을 연결합니다.',
@@ -69,7 +73,7 @@ export default function Hero() {
             >
               <picture data-slot={`hero-${index + 1}`} data-alt={slide.alt}>
                 <source media="(max-width: 64rem)" srcSet={slide.mobileSrc} />
-                <img src={slide.desktopSrc} width="1024" height="571" alt={slide.alt} fetchPriority={index === 0 ? 'high' : 'auto'} />
+                <img src={slide.desktopSrc} width={slide.width} height={slide.height} alt={slide.alt} fetchPriority={index === 0 ? 'high' : 'auto'} />
               </picture>
               <div className="hero-slide__scrim" aria-hidden="true" />
               <div className="site-container hero-slide__content">
